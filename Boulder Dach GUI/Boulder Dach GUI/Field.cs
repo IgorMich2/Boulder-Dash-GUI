@@ -17,7 +17,7 @@ namespace Boulder_Dach_GUI
     class Field
     {
         public static List<string[]> frame = new List<string[]>();
-        public static List<Button[]> frame2 = new List<Button[]>();
+        public static List<List<int>> frame2 = new List<List<int>>();
         static public SoundPlayer player = new SoundPlayer();
 
     }
