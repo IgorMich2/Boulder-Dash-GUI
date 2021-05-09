@@ -32,32 +32,34 @@ namespace Boulder_Dach_GUI
         public static int y;
 
 
-        public static void Win()
+        public static void Win(Form Boulder)
         {
 
             Field.player.SoundLocation = "win.wav";
             Field.player.Play();
-
-            Console.Clear();
-            Console.WriteLine("Win!");
+            Boulder.Controls.Clear();
+            //Console.Clear();
+            //Console.WriteLine("Win!");
             Thread.Sleep(5000);
             Field.player.Stop();
             gameField.score = gameField.maxpoint;
-            Console.Clear();
+            //Console.Clear();
 
         }
 
-        public static void Defeat()
+        public static void Defeat(Form Boulder)
         {
-            Console.Clear();
+            //Console.Clear();
             Field.player.Stop();
             Field.player.SoundLocation = "loose.wav";
             Field.player.Play();
 
-            Console.WriteLine("Defeat!");
+            //Console.WriteLine("Defeat!");
             Thread.Sleep(3000);
             Field.player.Stop();
             gameField.score = gameField.maxpoint;
+            Boulder.Controls.Clear();
+            
         }
 
         public static void GetArrayFromFile(string fileName)
@@ -75,88 +77,121 @@ namespace Boulder_Dach_GUI
             }
         }
 
-        public static void GravityFunction()
+        public static void GravityFunction(Form Boulder)
         {
             while (true)
             {
-                    Console.SetCursorPosition(Field.frame[1].Length, Field.frame.Count);
-                    if (CountRock() == 1)
+                    //Console.SetCursorPosition(Field.frame[1].Length, Field.frame.Count);
+                    if (CountRock(Boulder) == 1)
                     {
-                        MoveRock1();
+                        MoveRock1(Boulder);
 
                     }
-                    else if (CountRock() > 1)
+                    else if (CountRock(Boulder) > 1)
                     {
 
-                        MoveRock1();
+                        MoveRock1(Boulder);
                         for (int i = 0; i < 5; i++)
-                            MoveRock2();
+                            MoveRock2(Boulder);
 
                     }
                     Thread.Sleep(200);
             }
         }
-        public static void LivesFunction()
+        public static void LivesFunction(Form Boulder)
         {
+            
             while (true)
             {
-                for (int i = 0; i <= Field.frame.Count - 1; i++)
+                try
                 {
-                    for (int x = 0; x <= Field.frame[i].Length - 1; x++)
+                    for (int i = 0; i <= Field.frame.Count - 1; i++)
                     {
-                        if (Field.frame[i][x] == Rock.value)
+                        for (int x = 0; x <= Field.frame[i].Length - 1; x++)
                         {
-                            try
+                            if (Field.frame[i][x] == Rock.value)
                             {
-                                if (Field.frame[i + 1][x] == Hero.value)
+                                try
                                 {
-                                    lives = lives - 1;
-                                    Console.SetCursorPosition(1, 24);
-                                    Console.Write("Lives: " + gameField.lives + "  ");
-                                    if (lives == 0)
+                                    if (Field.frame[i + 1][x] == Hero.value)
                                     {
-                                        gameField.Defeat();
-                                        Field.frame[i][x] = Empty.value;
-                                        Field.frame[i + 1][x] = Rock.value;
-                                        Console.SetCursorPosition(x, i);
-                                        Console.Write(Empty.value);
-                                        Console.SetCursorPosition(x, i + 1);
-                                        Console.Write(Rock.value);
+                                        lives = lives - 1;
+                                        Console.SetCursorPosition(1, 24);
+                                        Console.Write("Lives: " + gameField.lives + "  ");
+                                        if (lives == 0)
+                                        {
+                                            gameField.Defeat(Boulder);
+                                            Field.frame[i][x] = Empty.value;
+                                            Field.frame[i + 1][x] = Rock.value;
+                                            Console.SetCursorPosition(x, i);
+                                            Console.Write(Empty.value);
+                                            Console.SetCursorPosition(x, i + 1);
+                                            Console.Write(Rock.value);
+                                        }
                                     }
                                 }
+                                catch { }
                             }
-                            catch { }
                         }
                     }
                 }
+                catch { }
             
                     Thread.Sleep(200);
             }
 
         }
-        public static void Renderer(Form BoulderForm)
+        public async static void Renderer(Form BoulderForm)
         {
-            BoulderForm.Controls.Clear();
-            int xpoint = 0;
-            int ypoint = 0;
-            
-            for (int i = 0; i < Field.frame.Count; i++)
+            if (BoulderForm.InvokeRequired)
             {
-                for (int j = 0; j < Field.frame[i].Length; j++)
+                BoulderForm.BeginInvoke((MethodInvoker)delegate ()
                 {
-                    Button button = new Button();
-                    button.Location = new Point(ypoint, xpoint);
-                    button.Size = new Size(20, 20);
-                    button.Text = Field.frame[i][j];
-                    
-                    BoulderForm.Controls.Add(button);
-                    ypoint = ypoint + 20;
+
+                    BoulderForm.Controls.Clear();
+                    int xpoint = 0;
+                    int ypoint = 0;
+
+                    for (int i = 0; i < Field.frame.Count; i++)
+                    {
+                        for (int j = 0; j < Field.frame[i].Length; j++)
+                        {
+                            Button button = new Button();
+                            button.Location = new Point(ypoint, xpoint);
+                            button.Size = new Size(20, 20);
+                            button.Text = Field.frame[i][j];
+
+                            BoulderForm.Controls.Add(button);
+                            ypoint = ypoint + 20;
+                        }
+                        xpoint = xpoint + 20;
+                        ypoint = 0;
+                    }
+                });
+            }
+            else
+            {
+                BoulderForm.Controls.Clear();
+                int xpoint = 0;
+                int ypoint = 0;
+
+                for (int i = 0; i < Field.frame.Count; i++)
+                {
+                    for (int j = 0; j < Field.frame[i].Length; j++)
+                    {
+                        Button button = new Button();
+                        button.Location = new Point(ypoint, xpoint);
+                        button.Size = new Size(20, 20);
+                        button.Text = Field.frame[i][j];
+
+                        BoulderForm.Controls.Add(button);
+                        ypoint = ypoint + 20;
+                    }
+                    xpoint = xpoint + 20;
+                    ypoint = 0;
                 }
-                xpoint = xpoint + 20;
-                ypoint = 0;
             }
         }
-
         public static void MoveHero(KeyEventArgs e, Form Boulder)
         {
             bool stat = true;
@@ -210,11 +245,11 @@ namespace Boulder_Dach_GUI
                         if (e.KeyCode == Keys.L)
                         {
                             gameField.score = gameField.maxpoint;
-                            gameField.Defeat();
+                            gameField.Defeat(Boulder);
                         }
                         if (e.KeyCode == Keys.K)
                         {
-                            gameField.Win();
+                            gameField.Win(Boulder);
                         }
                         break;
                     }
@@ -224,10 +259,10 @@ namespace Boulder_Dach_GUI
 
 
         }
-        public static void AddScores()
+        public static void AddScores(Form Boulder)
         {
             gameField.score += 100;
-            if (gameField.score >= gameField.maxpoint) gameField.Win();
+            if (gameField.score >= gameField.maxpoint) gameField.Win(Boulder);
             /*Console.SetCursorPosition(12, 24);
             Console.Write("Score: " + gameField.score);*/
         }
@@ -329,7 +364,7 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i - 1][x] = Hero.value;
                 gameField.Renderer(BoulderForm);
-                AddScores();
+                AddScores(BoulderForm);
             }
             
         }
@@ -340,7 +375,7 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i + 1][x] = Hero.value;
                 gameField.Renderer(BoulderForm);
-                AddScores();
+                AddScores(BoulderForm);
             }
         }
         public static void CollectLeft(ref int i, ref int x, Form BoulderForm)
@@ -350,7 +385,7 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x - 1] = Hero.value;
                 gameField.Renderer(BoulderForm);
-                AddScores();
+                AddScores(BoulderForm);
             }
         }
         public static void CollectRight(ref int i, ref int x, Form BoulderForm)
@@ -360,10 +395,10 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x + 1] = Hero.value;
                 gameField.Renderer(BoulderForm);
-                AddScores();
+                AddScores(BoulderForm);
             }
         }
-        public static int CountRock()
+        public static int CountRock(Form Boulder)
         {
             int c = 0;
             for (int i = Field.frame.Count - 1; i >= 0; i--)
@@ -381,7 +416,7 @@ namespace Boulder_Dach_GUI
             }
             return c;
         }
-        public static void MoveRock1()
+        public static void MoveRock1(Form Boulder)
         {
             for (int i = Field.frame.Count - 1; i >= 0; i--)
             {
@@ -393,10 +428,11 @@ namespace Boulder_Dach_GUI
                         {
                             Field.frame[i][x] = Empty.value;
                             Field.frame[i + 1][x] = Rock.value;
-                            Console.SetCursorPosition(x, i);
+                            /*Console.SetCursorPosition(x, i);
                             Console.Write(Empty.value);
                             Console.SetCursorPosition(x, i + 1);
-                            Console.Write(Rock.value);
+                            Console.Write(Rock.value);*/
+                            gameField.Renderer(Boulder);
                             return;
                         }
                     }
@@ -592,7 +628,7 @@ namespace Boulder_Dach_GUI
             while (BFS_res == false);
 
         }
-        public static void MoveRock2()
+        public static void MoveRock2(Form Boulder)
         {
             for (int i = 0; i <= Field.frame.Count - 1; i++)
             {
@@ -604,10 +640,11 @@ namespace Boulder_Dach_GUI
                         {
                             Field.frame[i][x] = Empty.value;
                             Field.frame[i + 1][x] = Rock.value;
-                            Console.SetCursorPosition(x, i);
+                            /*Console.SetCursorPosition(x, i);
                             Console.Write(Empty.value);
                             Console.SetCursorPosition(x, i + 1);
-                            Console.Write(Rock.value);
+                            Console.Write(Rock.value);*/
+                            gameField.Renderer(Boulder);
                             return;
                         }
                     }

@@ -13,8 +13,10 @@ using System.IO;
 using System.Media;
 
 
+
 namespace Boulder_Dach_GUI
 {
+
     public partial class BoulderDash : Form
     {
         public BoulderDash()
@@ -22,21 +24,45 @@ namespace Boulder_Dach_GUI
             InitializeComponent();
         }
 
-        private void BoulderDash_Load(object sender, EventArgs e)
+        public void BoulderDash_Load(object sender, EventArgs e)
         {
+            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             Form Temp = this;
             Console.ForegroundColor = ConsoleColor.Cyan;
             Thread music = new Thread(()=>Music.MusicFunction(Temp));
-            //music.Priority = ThreadPriority.Normal;
+            music.Priority = ThreadPriority.Normal;
+
             music.Start();
-            Thread gravity = new Thread(gameField.GravityFunction);
-            Thread lives = new Thread(gameField.LivesFunction);
-            lives.Priority = ThreadPriority.Highest;
-            //lives.Start();
+
+            Thread gravity = new Thread(() => gameField.GravityFunction(Temp));
+            Thread lives = new Thread(() => gameField.LivesFunction(Temp));
+            lives.Priority = ThreadPriority.Normal;
+            lives.Start();
             gravity.Priority = ThreadPriority.Normal;
+            
+           
+             Thread function = new Thread(Functionx);
+            function.Priority = ThreadPriority.Highest;
+             function.Start();
+             gravity.Start();
+            
             gameField.GetArrayFromFile("menu.txt");
             gameField.Renderer(this);
-            //gravity.Start();
+        }
+
+
+
+        public void BoulderDash_KeyDown(object sender, KeyEventArgs e)
+        {
+            gameField.MoveHero(e, this);
+            //Functionx(sender, e);
+           
+        }
+
+
+        public async void Functionx()
+        {
+            
             while (true)
             {
                 gameField.maxpoint = 400;
@@ -56,7 +82,8 @@ namespace Boulder_Dach_GUI
                             }
                         }
                     }
-                    Thread.Sleep(1000);
+
+                    Thread.Sleep(5000);
                 }
 
                 //Console.Clear();
@@ -93,23 +120,25 @@ namespace Boulder_Dach_GUI
                     case 5:
                         {
                             System.Environment.Exit(0);
+                            Application.Exit();
+                            
                             break;
                         }
                 }
 
                 //Console.ForegroundColor = ConsoleColor.Cyan;
                 gameField.Renderer(this);
-               /* Console.SetCursorPosition(12, 24);
-                Console.Write("Score: " + gameField.score);
-                Console.SetCursorPosition(1, 24);
-                Console.Write("Lives: " + gameField.lives);*/
+                /* Console.SetCursorPosition(12, 24);
+                 Console.Write("Score: " + gameField.score);
+                 Console.SetCursorPosition(1, 24);
+                 Console.Write("Lives: " + gameField.lives);*/
 
 
                 while (true)
                 {
                     /*Console.SetCursorPosition(Field.frame[1].Length, Field.frame.Count);
                     var keyInfo = Console.ReadKey();*/
-                    
+
 
                     if (gameField.score >= gameField.maxpoint)
                     {
@@ -121,6 +150,7 @@ namespace Boulder_Dach_GUI
                     //Console.SetCursorPosition(64, 24);
                     //Console.Write("Steps to @: " + gameField.BFS_help(gameField.y, gameField.x));
                     //Console.Write(" ");
+                    Thread.Sleep(1000);
                 }
 
                 gameField.score = 0;
@@ -128,17 +158,12 @@ namespace Boulder_Dach_GUI
                 //Console.Clear();
                 Field.frame.Clear();
                 gameField.frame.Clear();
-                /*Console.SetCursorPosition(0, 0);
-                gameField.GetArrayFromFile("menu.txt");*/
+                //Console.SetCursorPosition(0, 0);
+                gameField.GetArrayFromFile("menu.txt");
                 gameField.Renderer(this);
             }
         }
 
         
-
-        private void BoulderDash_KeyDown(object sender, KeyEventArgs e)
-        {
-            gameField.MoveHero(e, this);
-        }
     }
 }
