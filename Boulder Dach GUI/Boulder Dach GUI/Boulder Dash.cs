@@ -39,6 +39,8 @@ namespace Boulder_Dach_GUI
             lives.Priority = ThreadPriority.Normal;
             lives.Start();
             gravity.Priority = ThreadPriority.Normal;
+
+            
             
            
              Thread function = new Thread(Functionx);
@@ -48,6 +50,9 @@ namespace Boulder_Dach_GUI
             
             gameField.GetArrayFromFile("menu.txt");
             gameField.Renderer(this);
+
+            
+            
         }
 
 

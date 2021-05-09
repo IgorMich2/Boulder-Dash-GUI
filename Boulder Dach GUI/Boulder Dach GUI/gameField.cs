@@ -30,7 +30,7 @@ namespace Boulder_Dach_GUI
         public static bool Deadlock = false;
         public static int x;
         public static int y;
-
+        public static int kf2 = 0;
 
         public static void Win(Form Boulder)
         {
@@ -143,30 +143,32 @@ namespace Boulder_Dach_GUI
         }
         public async static void Renderer(Form BoulderForm)
         {
+
             if (BoulderForm.InvokeRequired)
             {
                 BoulderForm.BeginInvoke((MethodInvoker)delegate ()
                 {
+                     BoulderForm.Controls.Clear();
+                     int xpoint = 0;
+                     int ypoint = 0;
 
-                    BoulderForm.Controls.Clear();
-                    int xpoint = 0;
-                    int ypoint = 0;
+                     for (int i = 0; i < Field.frame.Count; i++)
+                     {
+                         for (int j = 0; j < Field.frame[i].Length; j++)
+                         {
+                             Button button = new Button();
+                             button.Location = new Point(ypoint, xpoint);
+                             button.Size = new Size(20, 20);
+                             button.Text = Field.frame[i][j];
 
-                    for (int i = 0; i < Field.frame.Count; i++)
-                    {
-                        for (int j = 0; j < Field.frame[i].Length; j++)
-                        {
-                            Button button = new Button();
-                            button.Location = new Point(ypoint, xpoint);
-                            button.Size = new Size(20, 20);
-                            button.Text = Field.frame[i][j];
-
-                            BoulderForm.Controls.Add(button);
-                            ypoint = ypoint + 20;
-                        }
-                        xpoint = xpoint + 20;
-                        ypoint = 0;
-                    }
+                             BoulderForm.Controls.Add(button);
+                            Field.frame2[i][j] = kf2;
+                            kf2++;
+                             ypoint = ypoint + 20;
+                         }
+                         xpoint = xpoint + 20;
+                         ypoint = 0;
+                     }
                 });
             }
             else
@@ -185,6 +187,7 @@ namespace Boulder_Dach_GUI
                         button.Text = Field.frame[i][j];
 
                         BoulderForm.Controls.Add(button);
+                        
                         ypoint = ypoint + 20;
                     }
                     xpoint = xpoint + 20;
@@ -287,9 +290,26 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i + 1][x] = Hero.value;
-
-                gameField.Renderer(Boulder);
+                //Boulder.Controls.RemoveAt(Field.frame[0].Length * i + x);
+                /*Boulder.Controls.RemoveAt(Field.frame2[i][x]);
+                Boulder.Controls.RemoveAt(Field.frame[0].Length * (i+1) + x-1);
                 
+                int xpoint = i * 20;
+                int ypoint = x * 20;
+              
+                 Button button = new Button();
+                 button.Location = new Point(ypoint, xpoint);
+                 button.Size = new Size(20, 20);
+                 button.Text = Field.frame[i][x];
+                 Boulder.Controls.Add(button);
+
+                Button button2 = new Button();
+                button2.Location = new Point(ypoint, xpoint+20);
+                button2.Size = new Size(20, 20);
+                button2.Text = Field.frame[i+1][x];
+                Boulder.Controls.Add(button2);*/
+                gameField.Renderer(Boulder);
+
                 stat = false;
 
             }
