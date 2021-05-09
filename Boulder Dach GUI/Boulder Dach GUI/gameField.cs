@@ -162,8 +162,8 @@ namespace Boulder_Dach_GUI
                              button.Text = Field.frame[i][j];
 
                              BoulderForm.Controls.Add(button);
-                            Field.frame2[i][j] = kf2;
-                            kf2++;
+                            //Field.frame2[i][j] = kf2;
+                            //kf2++;
                              ypoint = ypoint + 20;
                          }
                          xpoint = xpoint + 20;
@@ -425,13 +425,17 @@ namespace Boulder_Dach_GUI
             {
                 for (int x = Field.frame[i].Length - 1; x >= 0; x--)
                 {
-                    if (Field.frame[i][x] == Rock.value)
+                    try
                     {
-                        if (Field.frame[i + 1][x] == Empty.value)
+                        if (Field.frame[i][x] == Rock.value)
                         {
-                            c++;
+                            if (Field.frame[i + 1][x] == Empty.value)
+                            {
+                                c++;
+                            }
                         }
                     }
+                    catch { }
                 }
             }
             return c;
