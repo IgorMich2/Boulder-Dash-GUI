@@ -16,7 +16,7 @@ using System.Media;
 
 namespace Boulder_Dach_GUI
 {
-
+    
     public partial class BoulderDash : Form
     {
         public BoulderDash()
@@ -37,15 +37,15 @@ namespace Boulder_Dach_GUI
             Thread gravity = new Thread(() => gameField.GravityFunction(Temp));
             Thread lives = new Thread(() => gameField.LivesFunction(Temp));
             lives.Priority = ThreadPriority.Normal;
-            lives.Start();
+            //lives.Start();
             gravity.Priority = ThreadPriority.Normal;
 
              Thread GameFunctionThread = new Thread(GameFunction);
             GameFunctionThread.Priority = ThreadPriority.Highest;
             GameFunctionThread.Start();
-             gravity.Start();
+            gravity.Start();
             
-            gameField.GetArrayFromFile("menu.txt");
+            gameField.GetArrayFromFile("menu.txt", this);
             gameField.Renderer(this);
 
             
@@ -56,6 +56,7 @@ namespace Boulder_Dach_GUI
 
         public void BoulderDash_KeyDown(object sender, KeyEventArgs e)
         {
+            Encoding utf8 = Encoding.UTF8;
             gameField.MoveHero(e, this);
             //Functionx(sender, e);
            
@@ -64,11 +65,11 @@ namespace Boulder_Dach_GUI
 
         public async void GameFunction()
         {
-            
+            int choose = -1;
             while (true)
             {
                 gameField.maxpoint = 400;
-                int choose = -1;
+                choose = -1;
                 while (choose == -1)
                 {
                     //Console.SetCursorPosition(Field.frame[1].Length, Field.frame.Count);
@@ -85,7 +86,7 @@ namespace Boulder_Dach_GUI
                         }
                     }
 
-                    Thread.Sleep(5000);
+                    Thread.Sleep(1000);
                 }
 
                 //Console.Clear();
@@ -97,38 +98,41 @@ namespace Boulder_Dach_GUI
                 {
                     case 1:
                         {
-                            gameField.GetArrayFromFile("1.txt");
+                            gameField.GetArrayFromFile("1.txt", this);
                             gameField.maxpoint = 3400;
                             break;
                         }
                     case 2:
                         {
-                            gameField.GetArrayFromFile("2.txt");
+                            gameField.GetArrayFromFile("2.txt", this);
                             gameField.maxpoint = 3400;
                             break;
                         }
                     case 3:
                         {
-                            gameField.GetArrayFromFile("3.txt");
+                            gameField.GetArrayFromFile("3.txt", this);
                             gameField.maxpoint = 3400;
                             break;
                         }
                     case 4:
                         {
-                            gameField.GetArrayFromFile("4.txt");
-                            gameField.Random2();
+                            gameField.GetArrayFromFile("4.txt", this);
+                            gameField.Random2(this);
+                            
                             break;
                         }
                     case 5:
                         {
+                            
                             System.Environment.Exit(0);
                             Application.Exit();
-                            
+                            this.Close();
                             break;
                         }
                 }
 
                 //Console.ForegroundColor = ConsoleColor.Cyan;
+
                 gameField.Renderer(this);
                 /* Console.SetCursorPosition(12, 24);
                  Console.Write("Score: " + gameField.score);
@@ -156,12 +160,13 @@ namespace Boulder_Dach_GUI
                 }
 
                 gameField.score = 0;
-
+                gameField.maxpoint = 400;
                 //Console.Clear();
                 Field.frame.Clear();
-                gameField.frame.Clear();
+                Field.frame2.Clear();
+                //gameField.frame.Clear();
                 //Console.SetCursorPosition(0, 0);
-                gameField.GetArrayFromFile("menu.txt");
+                gameField.GetArrayFromFile("menu.txt", this);
                 gameField.Renderer(this);
             }
         }
