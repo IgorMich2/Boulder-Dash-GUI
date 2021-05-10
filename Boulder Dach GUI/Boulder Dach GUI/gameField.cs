@@ -62,18 +62,72 @@ namespace Boulder_Dach_GUI
             
         }
 
-        public static void GetArrayFromFile(string fileName)
+        public static void GetArrayFromFile(string fileName, Form BoulderForm)
         {
+            Field.frame.Clear();
+            Field.frame2.Clear();
             string[] lines = File.ReadAllLines(fileName);
             int rowCount = lines.Length;
-
+            
+            int xpoint = 0, ypoint = 0;
             for (int i = 0; i < rowCount - 1; i++)
             {
+                PictureBox[] lines2 = new PictureBox[lines[1].Length];
                 char[] line = lines[i + 1].ToCharArray();
                 string[] strline = new string[line.Length];
+                 
+
                 for (int k = 0; k < line.Length; k++)
+                {
+                    
                     strline[k] = Convert.ToString(line[k]);
+                    lines2[k] = new PictureBox();
+                    lines2[k].SizeMode = PictureBoxSizeMode.StretchImage;
+                    lines2[k].Location = new Point(ypoint, xpoint);
+                    lines2[k].Size = new Size(20, 20);
+
+                    
+                    if (strline[k] == Hero.value)
+                    {
+                        lines2[k].Image = Image.FromFile("hero.jpg");
+                    }
+                    else if (strline[k] == Diamong.value)
+                    {
+                        lines2[k].Image = Image.FromFile("diamond.png");
+                    }
+                    else if (strline[k] == Rock.value)
+                    {
+                        lines2[k].Image = Image.FromFile("rock.png");
+                    }
+                    else if (strline[k] == Sand.value)
+                    {
+                        lines2[k].Image = Image.FromFile("sand.jpg");
+                    }
+                    else if (strline[k] == Empty.value)
+                    {
+                        lines2[k].Image = Image.FromFile("empty.jpg");
+                    }
+                    else if (strline[k] == "|" || strline[k] == "-")
+                    {
+                        lines2[k].Image = Image.FromFile("wall.jpg");
+                    }
+                    else
+                    {
+                        lines2[k].Image = Image.FromFile("wall.jpg");
+                    }
+                    try
+                    {
+                        BoulderForm.Controls.Add(lines2[k]);
+                    }
+                    catch { }
+                    ypoint = ypoint + 20;
+                }
                 Field.frame.Add(strline);
+                Field.frame2.Add(lines2);
+                
+                ypoint = 0;
+                xpoint = xpoint + 20;
+
             }
         }
 
@@ -143,38 +197,110 @@ namespace Boulder_Dach_GUI
         }
         public async static void Renderer(Form BoulderForm)
         {
-
             if (BoulderForm.InvokeRequired)
             {
                 BoulderForm.BeginInvoke((MethodInvoker)delegate ()
                 {
-                     BoulderForm.Controls.Clear();
-                     int xpoint = 0;
-                     int ypoint = 0;
+                    BoulderForm.Controls.Clear();
+                    for (int i = 0; i < Field.frame.Count; i++)
+                    {
+                        for (int j = 0; j < Field.frame[i].Length; j++)
+                        {
+                            BoulderForm.Controls.Add(Field.frame2[i][j]);
+                        }
+                    }
 
-                     for (int i = 0; i < Field.frame.Count; i++)
-                     {
-                         for (int j = 0; j < Field.frame[i].Length; j++)
-                         {
-                             Button button = new Button();
-                             button.Location = new Point(ypoint, xpoint);
-                             button.Size = new Size(20, 20);
-                             button.Text = Field.frame[i][j];
+                    /*BoulderForm.Controls.Clear();
+                    int xpoint = 0;
+                    int ypoint = 0;
 
-                             BoulderForm.Controls.Add(button);
-                            Field.frame2[i][j] = kf2;
-                            kf2++;
-                             ypoint = ypoint + 20;
-                         }
-                         xpoint = xpoint + 20;
-                         ypoint = 0;
-                     }
+                    for (int i = 0; i < Field.frame.Count; i++)
+                    {
+                        for (int j = 0; j < Field.frame[i].Length; j++)
+                        {
+                            
+                            if (Field.frame[i][j] == Hero.value)
+                            {
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new Point(ypoint, xpoint);
+                                pictureBox.Size = new Size(20, 20);
+                                pictureBox.Image = Image.FromFile("hero.jpg");
+                                BoulderForm.Controls.Add(pictureBox);
+                            }
+                            else if (Field.frame[i][j] == Diamong.value)
+                            {
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new Point(ypoint, xpoint);
+                                pictureBox.Size = new Size(20, 20);
+                                pictureBox.Image = Image.FromFile("diamond.png");
+                                BoulderForm.Controls.Add(pictureBox);
+                            }
+                            else if (Field.frame[i][j] == Rock.value)
+                            {
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new Point(ypoint, xpoint);
+                                pictureBox.Size = new Size(20, 20);
+                                pictureBox.Image = Image.FromFile("rock.png");
+                                BoulderForm.Controls.Add(pictureBox);
+                            }
+                            else if (Field.frame[i][j] == Sand.value)
+                            {
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new Point(ypoint, xpoint);
+                                pictureBox.Size = new Size(20, 20);
+                                pictureBox.Image = Image.FromFile("sand.jpg");
+                                BoulderForm.Controls.Add(pictureBox);
+                            }
+                            else if (Field.frame[i][j] == Empty.value)
+                            {
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new Point(ypoint, xpoint);
+                                pictureBox.Size = new Size(20, 20);
+                                pictureBox.Image = Image.FromFile("empty.png");
+                                BoulderForm.Controls.Add(pictureBox);
+                            }
+                            else if (Field.frame[i][j] == "|" || Field.frame[i][j] == "-")
+                            {
+                                PictureBox pictureBox = new PictureBox();
+                                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox.Location = new Point(ypoint, xpoint);
+                                pictureBox.Size = new Size(20, 20);
+                                pictureBox.Image = Image.FromFile("wall.jpg");
+                                BoulderForm.Controls.Add(pictureBox);
+                            }
+                            else
+                            {
+                                Button button = new Button();
+                                button.Location = new Point(ypoint, xpoint);
+                                button.Size = new Size(20, 20);
+                                button.Text = Field.frame[i][j];
+                                BoulderForm.Controls.Add(button);
+                            }
+
+                            ypoint = ypoint + 20;
+                        }
+                        xpoint = xpoint + 20;
+                        ypoint = 0;
+                    }*/
                 });
             }
             else
             {
                 BoulderForm.Controls.Clear();
-                int xpoint = 0;
+
+                for (int i = 0; i < Field.frame.Count; i++)
+                {
+                    for (int j = 0; j < Field.frame[i].Length; j++)
+                    {
+                        BoulderForm.Controls.Add(Field.frame2[i][j]);
+                    }
+                }
+                /*int xpoint = 0;
                 int ypoint = 0;
 
                 for (int i = 0; i < Field.frame.Count; i++)
@@ -184,15 +310,71 @@ namespace Boulder_Dach_GUI
                         Button button = new Button();
                         button.Location = new Point(ypoint, xpoint);
                         button.Size = new Size(20, 20);
-                        button.Text = Field.frame[i][j];
+                        if (Field.frame[i][j] == Hero.value)
+                        {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                            pictureBox.Location = new Point(ypoint, xpoint);
+                            pictureBox.Size = new Size(20, 20);
+                            pictureBox.Image = Image.FromFile("hero.jpg");
+                            BoulderForm.Controls.Add(pictureBox);
+                        }
+                        else if (Field.frame[i][j] == Diamong.value)
+                        {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                            pictureBox.Location = new Point(ypoint, xpoint);
+                            pictureBox.Size = new Size(20, 20);
+                            pictureBox.Image = Image.FromFile("diamond.png");
+                            BoulderForm.Controls.Add(pictureBox);
+                        }
+                        else if (Field.frame[i][j] == Rock.value)
+                        {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                            pictureBox.Location = new Point(ypoint, xpoint);
+                            pictureBox.Size = new Size(20, 20);
+                            pictureBox.Image = Image.FromFile("rock.png");
+                            BoulderForm.Controls.Add(pictureBox);
+                        }
+                        else if (Field.frame[i][j] == Sand.value)
+                        {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                            pictureBox.Location = new Point(ypoint, xpoint);
+                            pictureBox.Size = new Size(20, 20);
+                            pictureBox.Image = Image.FromFile("sand.jpg");
+                            BoulderForm.Controls.Add(pictureBox);
+                        }
+                        else if (Field.frame[i][j] == Empty.value)
+                        {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                            pictureBox.Location = new Point(ypoint, xpoint);
+                            pictureBox.Size = new Size(20, 20);
+                            pictureBox.Image = Image.FromFile("empty.jpg");
+                            BoulderForm.Controls.Add(pictureBox);
+                        }
+                        else if (Field.frame[i][j] == "|" || Field.frame[i][j] == "-")
+                        {
+                            PictureBox pictureBox = new PictureBox();
+                            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                            pictureBox.Location = new Point(ypoint, xpoint);
+                            pictureBox.Size = new Size(20, 20);
+                            pictureBox.Image = Image.FromFile("wall.jpg");
+                            BoulderForm.Controls.Add(pictureBox);
+                        }
+                        else
+                        {
+                            button.Text = Field.frame[i][j];
+                            BoulderForm.Controls.Add(button);
+                        }
 
-                        BoulderForm.Controls.Add(button);
-                        
                         ypoint = ypoint + 20;
                     }
                     xpoint = xpoint + 20;
                     ypoint = 0;
-                }
+                }*/
             }
         }
         public static void MoveHero(KeyEventArgs e, Form Boulder)
@@ -218,6 +400,7 @@ namespace Boulder_Dach_GUI
                                 else
                                 {
                                     GoUp(ref i, ref x, ref stat, Boulder);
+                                    stat = false;
                                 }
                             }
 
@@ -273,11 +456,20 @@ namespace Boulder_Dach_GUI
         {
             try
             {
-                if ((i - 1) >= 0 && Field.frame[i - 1][x] == Sand.value || Field.frame[i - 1][x] == Empty.value)
+                if ((i - 1) >= 0 && (Field.frame[i - 1][x] == Sand.value || Field.frame[i - 1][x] == Empty.value))
                 {
                     Field.frame[i][x] = Empty.value;
                     Field.frame[i - 1][x] = Hero.value;
-                    gameField.Renderer(Boulder);
+                    
+                    Boulder.Controls.Remove(Field.frame2[i][x]);
+                    Boulder.Controls.Remove(Field.frame2[i - 1][x]);
+                    Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                    Field.frame2[i - 1][x].Image = Image.FromFile("hero.jpg");
+                    Boulder.Controls.Add(Field.frame2[i][x]);
+                    Boulder.Controls.Add(Field.frame2[i - 1][x]);
+
+
+                    //gameField.Renderer(Boulder);
                 }
 
             }
@@ -290,6 +482,13 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i + 1][x] = Hero.value;
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i + 1][x].Image = Image.FromFile("hero.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i + 1][x]);
+
                 //Boulder.Controls.RemoveAt(Field.frame[0].Length * i + x);
                 /*Boulder.Controls.RemoveAt(Field.frame2[i][x]);
                 Boulder.Controls.RemoveAt(Field.frame[0].Length * (i+1) + x-1);
@@ -308,7 +507,7 @@ namespace Boulder_Dach_GUI
                 button2.Size = new Size(20, 20);
                 button2.Text = Field.frame[i+1][x];
                 Boulder.Controls.Add(button2);*/
-                gameField.Renderer(Boulder);
+                //gameField.Renderer(Boulder);
 
                 stat = false;
 
@@ -322,7 +521,16 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x - 1] = Hero.value;
-                gameField.Renderer(Boulder);
+
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i][x - 1].Image = Image.FromFile("hero.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i][x - 1]);
+
+
+                //gameField.Renderer(Boulder);
                 stat = false;
                 
             }
@@ -331,7 +539,17 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x - 1] = Hero.value;
                 Field.frame[i][x - 2] = Rock.value;
-                gameField.Renderer(Boulder);
+
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                Boulder.Controls.Remove(Field.frame2[i][x - 2]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i][x - 1].Image = Image.FromFile("hero.jpg");
+                Field.frame2[i][x - 2].Image = Image.FromFile("rock.png");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i][x - 1]);
+                Boulder.Controls.Add(Field.frame2[i][x - 2]);
+                //gameField.Renderer(Boulder);
                 stat = false;
                 
             }
@@ -344,16 +562,34 @@ namespace Boulder_Dach_GUI
 
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x + 1] = Hero.value;
-                
+
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i][x + 1].Image = Image.FromFile("hero.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i][x + 1]);
+
                 stat = false;
-                gameField.Renderer(Boulder);
+                //gameField.Renderer(Boulder);
             }
             else if ((x - 2) <= (Field.frame[i].Length - 1) && Field.frame[i][x + 1] == Rock.value && Field.frame[i][x + 2] == Empty.value)
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x + 1] = Hero.value;
                 Field.frame[i][x + 2] = Rock.value;
-                gameField.Renderer(Boulder);
+
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                Boulder.Controls.Remove(Field.frame2[i][x + 2]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i][x + 1].Image = Image.FromFile("hero.jpg");
+                Field.frame2[i][x + 2].Image = Image.FromFile("rock.png");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i][x + 1]);
+                Boulder.Controls.Add(Field.frame2[i][x + 2]);
+
+                //gameField.Renderer(Boulder);
                 stat = false;
                 
             }
@@ -364,7 +600,11 @@ namespace Boulder_Dach_GUI
             if ((x - 1) <= (Field.frame[i].Length - 1) && Field.frame[i][x + 1] == Sand.value)
             {
                 Field.frame[i][x + 1] = Empty.value;
-                gameField.Renderer(Boulder);
+                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                Field.frame2[i][x + 1].Image = Image.FromFile("empty.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x + 1]);
+
+                //gameField.Renderer(Boulder);
                 stat = false;
             }
         }
@@ -373,7 +613,11 @@ namespace Boulder_Dach_GUI
             if ((x - 1) >= 0 && Field.frame[i][x - 1] == Sand.value)
             {
                 Field.frame[i][x - 1] = Empty.value;
-                gameField.Renderer(Boulder);
+                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                Field.frame2[i][x - 1].Image = Image.FromFile("empty.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x - 1]);
+
+                //gameField.Renderer(Boulder);
                 stat = false;
             }
         }
@@ -383,81 +627,131 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i - 1][x] = Hero.value;
-                gameField.Renderer(BoulderForm);
+                BoulderForm.Controls.Remove(Field.frame2[i][x]);
+                BoulderForm.Controls.Remove(Field.frame2[i - 1][x]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i - 1][x].Image = Image.FromFile("hero.jpg");
+                BoulderForm.Controls.Add(Field.frame2[i][x]);
+                BoulderForm.Controls.Add(Field.frame2[i - 1][x]);
+
+
+                //gameField.Renderer(BoulderForm);
                 AddScores(BoulderForm);
             }
             
         }
-        public static void CollectDown(ref int i, ref int x, Form BoulderForm)
+        public static void CollectDown(ref int i, ref int x, Form Boulder)
         {
             if ((i + 1) <= (Field.frame.Count - 1) && Field.frame[i + 1][x] == Diamong.value)
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i + 1][x] = Hero.value;
-                gameField.Renderer(BoulderForm);
-                AddScores(BoulderForm);
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i + 1][x].Image = Image.FromFile("hero.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i + 1][x]);
+
+                //gameField.Renderer(BoulderForm);
+                AddScores(Boulder);
             }
         }
-        public static void CollectLeft(ref int i, ref int x, Form BoulderForm)
+        public static void CollectLeft(ref int i, ref int x, Form Boulder)
         {
             if ((x - 1) >= 0 && Field.frame[i][x - 1] == Diamong.value)
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x - 1] = Hero.value;
-                gameField.Renderer(BoulderForm);
-                AddScores(BoulderForm);
+
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i][x - 1].Image = Image.FromFile("hero.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i][x - 1]);
+                //gameField.Renderer(BoulderForm);
+                AddScores(Boulder);
             }
         }
-        public static void CollectRight(ref int i, ref int x, Form BoulderForm)
+        public static void CollectRight(ref int i, ref int x, Form Boulder)
         {
             if ((x - 1) <= (Field.frame[i].Length - 1) && Field.frame[i][x + 1] == Diamong.value)
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x + 1] = Hero.value;
-                gameField.Renderer(BoulderForm);
-                AddScores(BoulderForm);
+
+                Boulder.Controls.Remove(Field.frame2[i][x]);
+                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                Field.frame2[i][x + 1].Image = Image.FromFile("hero.jpg");
+                Boulder.Controls.Add(Field.frame2[i][x]);
+                Boulder.Controls.Add(Field.frame2[i][x + 1]);
+                //gameField.Renderer(BoulderForm);
+                AddScores(Boulder);
             }
         }
         public static int CountRock(Form Boulder)
         {
-            int c = 0;
-            for (int i = Field.frame.Count - 1; i >= 0; i--)
+            try
             {
-                for (int x = Field.frame[i].Length - 1; x >= 0; x--)
+                int c = 0;
+                for (int i = Field.frame.Count - 1; i >= 0; i--)
                 {
-                    if (Field.frame[i][x] == Rock.value)
+                    for (int x = Field.frame[i].Length - 1; x >= 0; x--)
                     {
-                        if (Field.frame[i + 1][x] == Empty.value)
+                        try
                         {
-                            c++;
+                            if (Field.frame[i][x] == Rock.value)
+                            {
+                                if (Field.frame[i + 1][x] == Empty.value)
+                                {
+                                    c++;
+                                }
+                            }
                         }
+                        catch { }
                     }
                 }
+                return c;
             }
-            return c;
+            catch { }
+            return 0;
         }
         public static void MoveRock1(Form Boulder)
         {
-            for (int i = Field.frame.Count - 1; i >= 0; i--)
+            try
             {
-                for (int x = Field.frame[i].Length - 1; x >= 0; x--)
+                for (int i = Field.frame.Count - 1; i >= 0; i--)
                 {
-                    if (Field.frame[i][x] == Rock.value)
+                    for (int x = Field.frame[i].Length - 1; x >= 0; x--)
                     {
-                       if (Field.frame[i + 1][x] == Empty.value)
+                        if (Field.frame[i][x] == Rock.value)
                         {
-                            Field.frame[i][x] = Empty.value;
-                            Field.frame[i + 1][x] = Rock.value;
-                            /*Console.SetCursorPosition(x, i);
-                            Console.Write(Empty.value);
-                            Console.SetCursorPosition(x, i + 1);
-                            Console.Write(Rock.value);*/
-                            gameField.Renderer(Boulder);
-                            return;
+                            if (Field.frame[i + 1][x] == Empty.value)
+                            {
+                                Field.frame[i][x] = Empty.value;
+                                Field.frame[i + 1][x] = Rock.value;
+
+                                Boulder.Controls.Remove(Field.frame2[i][x]);
+                                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                                Field.frame2[i + 1][x].Image = Image.FromFile("rock.png");
+                                Boulder.Controls.Add(Field.frame2[i][x]);
+                                Boulder.Controls.Add(Field.frame2[i + 1][x]);
+
+                                /*Console.SetCursorPosition(x, i);
+                                Console.Write(Empty.value);
+                                Console.SetCursorPosition(x, i + 1);
+                                Console.Write(Rock.value);*/
+                                //gameField.Renderer(Boulder);
+                                return;
+                            }
                         }
                     }
                 }
             }
+            catch { }
         }
         public static void BFS_step(int i1, int i2)
         {
@@ -589,7 +883,7 @@ namespace Boulder_Dach_GUI
             while (BFS_res == false);
 
         }
-        public static void Random2()
+        public static void Random2(Form Boulder)
         {
             int temp, bs = 0, bd = 0, br = 0;
             string prev = Sand.value;
@@ -627,17 +921,20 @@ namespace Boulder_Dach_GUI
                         if (temp < (70 + bs - bd - br))
                         {
                             Field.frame[i][x] = Sand.value;
+                            Field.frame2[i][x].Image = Image.FromFile("sand.jpg");
                             prev = Sand.value;
                         }
                         else if (temp < 80 + bs + bd - br)
                         {
                             Field.frame[i][x] = Diamong.value;
+                            Field.frame2[i][x].Image = Image.FromFile("diamond.png");
                             maxpoint += 100;
                             prev = Diamong.value;
                         }
                         else if (temp < 100 + bs + bd + br)
                         {
                             Field.frame[i][x] = Rock.value;
+                            Field.frame2[i][x].Image = Image.FromFile("rock.png");
                             prev = Rock.value;
                         }
                     }
@@ -646,30 +943,41 @@ namespace Boulder_Dach_GUI
                 BFS_res = BFS(1, 1);
             }
             while (BFS_res == false);
-
+            gameField.Renderer(Boulder);
         }
         public static void MoveRock2(Form Boulder)
         {
-            for (int i = 0; i <= Field.frame.Count - 1; i++)
+            try
             {
-                for (int x = 0; x <= Field.frame[i].Length - 1; x++)
+                for (int i = 0; i <= Field.frame.Count - 1; i++)
                 {
-                    if (Field.frame[i][x] == Rock.value)
+                    for (int x = 0; x <= Field.frame[i].Length - 1; x++)
                     {
-                        if (Field.frame[i + 1][x] == Empty.value)
+                        if (Field.frame[i][x] == Rock.value)
                         {
-                            Field.frame[i][x] = Empty.value;
-                            Field.frame[i + 1][x] = Rock.value;
-                            /*Console.SetCursorPosition(x, i);
-                            Console.Write(Empty.value);
-                            Console.SetCursorPosition(x, i + 1);
-                            Console.Write(Rock.value);*/
-                            gameField.Renderer(Boulder);
-                            return;
+                            if (Field.frame[i + 1][x] == Empty.value)
+                            {
+                                Field.frame[i][x] = Empty.value;
+                                Field.frame[i + 1][x] = Rock.value;
+
+                                Boulder.Controls.Remove(Field.frame2[i][x]);
+                                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                                Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
+                                Field.frame2[i + 1][x].Image = Image.FromFile("rock.png");
+                                Boulder.Controls.Add(Field.frame2[i][x]);
+                                Boulder.Controls.Add(Field.frame2[i + 1][x]);
+                                /*Console.SetCursorPosition(x, i);
+                                Console.Write(Empty.value);
+                                Console.SetCursorPosition(x, i + 1);
+                                Console.Write(Rock.value);*/
+                                //gameField.Renderer(Boulder);
+                                return;
+                            }
                         }
                     }
                 }
             }
+            catch { }
         }
 
     }
