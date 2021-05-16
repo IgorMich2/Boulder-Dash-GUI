@@ -33,17 +33,19 @@ namespace Boulder_Dach_GUI
             music.Priority = ThreadPriority.Normal;
 
             music.Start();
+            
+           
 
-            Thread gravity = new Thread(() => gameField.GravityFunction(Temp));
+            
             Thread lives = new Thread(() => gameField.LivesFunction(Temp));
             lives.Priority = ThreadPriority.Normal;
             //lives.Start();
-            gravity.Priority = ThreadPriority.Normal;
+            
 
-             Thread GameFunctionThread = new Thread(GameFunction);
+            Thread GameFunctionThread = new Thread(GameFunction);
             GameFunctionThread.Priority = ThreadPriority.Highest;
             GameFunctionThread.Start();
-            gravity.Start();
+            
             
             gameField.GetArrayFromFile("menu.txt", this);
             gameField.Renderer(this);
@@ -65,9 +67,26 @@ namespace Boulder_Dach_GUI
 
         public async void GameFunction()
         {
+            Thread gravity = new Thread(() => gameField.GravityFunction(this));
+            gravity.Priority = ThreadPriority.Normal;
+            gravity.Start();
+
+            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             int choose = -1;
+            
             while (true)
             {
+                gravity.Suspend();
+                PictureBox menu = new PictureBox();
+                menu.SizeMode = PictureBoxSizeMode.StretchImage;
+                menu.Location = new Point(0, 0);
+                menu.Size = new Size(1600, 900);
+                menu.Image = Image.FromFile("menu.jpg");
+                this.Invoke((MethodInvoker)delegate
+                {
+                    this.Controls.Add(menu);
+                });
+                
                 gameField.maxpoint = 400;
                 choose = -1;
                 while (choose == -1)
@@ -86,7 +105,7 @@ namespace Boulder_Dach_GUI
                         }
                     }
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
                 }
 
                 //Console.Clear();
@@ -123,6 +142,13 @@ namespace Boulder_Dach_GUI
                         }
                     case 5:
                         {
+                            gameField.GetArrayFromFile("5.txt", this);
+                            gameField.Intellectual(this);
+
+                            break;
+                        }
+                    case 6:
+                        {
                             
                             System.Environment.Exit(0);
                             Application.Exit();
@@ -134,12 +160,14 @@ namespace Boulder_Dach_GUI
                 //Console.ForegroundColor = ConsoleColor.Cyan;
 
                 gameField.Renderer(this);
+
+
                 /* Console.SetCursorPosition(12, 24);
                  Console.Write("Score: " + gameField.score);
                  Console.SetCursorPosition(1, 24);
                  Console.Write("Lives: " + gameField.lives);*/
 
-
+                gravity.Resume();
                 while (true)
                 {
                     /*Console.SetCursorPosition(Field.frame[1].Length, Field.frame.Count);
@@ -150,6 +178,7 @@ namespace Boulder_Dach_GUI
                     {
                         break;
                     }
+                    
                     /*Console.SetCursorPosition(24, 24);
                     Console.Write("Deadlock: " + !gameField.BFS(gameField.y, gameField.x));
                     Console.Write(" ");*/
@@ -158,7 +187,7 @@ namespace Boulder_Dach_GUI
                     //Console.Write(" ");
                     Thread.Sleep(1000);
                 }
-
+                gravity.Suspend();
                 gameField.score = 0;
                 gameField.maxpoint = 400;
                 //Console.Clear();
@@ -171,6 +200,23 @@ namespace Boulder_Dach_GUI
             }
         }
 
-        
+        private void BoulderDash_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+            System.Environment.Exit(0);
+            Application.Exit();
+        }
+
+        private void BoulderDash_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Выйти из игры?",
+                "Boulder Dash by Igor Michurin",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }
