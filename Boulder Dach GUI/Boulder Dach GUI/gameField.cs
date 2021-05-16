@@ -461,14 +461,14 @@ namespace Boulder_Dach_GUI
                     Field.frame[i][x] = Empty.value;
                     Field.frame[i - 1][x] = Hero.value;
                     
-                    Boulder.Controls.Remove(Field.frame2[i][x]);
-                    Boulder.Controls.Remove(Field.frame2[i - 1][x]);
+                    //Boulder.Controls.Remove(Field.frame2[i][x]);
+                    //Boulder.Controls.Remove(Field.frame2[i - 1][x]);
                     Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                     Field.frame2[i - 1][x].Image = Image.FromFile("hero.jpg");
                     Boulder.Controls.Add(Field.frame2[i][x]);
                     Boulder.Controls.Add(Field.frame2[i - 1][x]);
-
-
+                    Field.frame2[i][x].BringToFront();
+                    Field.frame2[i-1][x].BringToFront();
                     //gameField.Renderer(Boulder);
                 }
 
@@ -482,12 +482,15 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i + 1][x] = Hero.value;
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i + 1][x].Image = Image.FromFile("hero.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
                 Boulder.Controls.Add(Field.frame2[i + 1][x]);
+                //Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i + 1][x].BringToFront();
+
 
                 //Boulder.Controls.RemoveAt(Field.frame[0].Length * i + x);
                 /*Boulder.Controls.RemoveAt(Field.frame2[i][x]);
@@ -522,13 +525,14 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x - 1] = Hero.value;
 
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x - 1]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i][x - 1].Image = Image.FromFile("hero.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x]);
                 Boulder.Controls.Add(Field.frame2[i][x - 1]);
-
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i][x-1].BringToFront();
 
                 //gameField.Renderer(Boulder);
                 stat = false;
@@ -540,9 +544,9 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x - 1] = Hero.value;
                 Field.frame[i][x - 2] = Rock.value;
 
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
-                Boulder.Controls.Remove(Field.frame2[i][x - 2]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x - 2]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i][x - 1].Image = Image.FromFile("hero.jpg");
                 Field.frame2[i][x - 2].Image = Image.FromFile("rock.png");
@@ -563,12 +567,14 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x + 1] = Hero.value;
 
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x + 1]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i][x + 1].Image = Image.FromFile("hero.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x]);
                 Boulder.Controls.Add(Field.frame2[i][x + 1]);
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i][x  + 1].BringToFront();
 
                 stat = false;
                 //gameField.Renderer(Boulder);
@@ -579,9 +585,9 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x + 1] = Hero.value;
                 Field.frame[i][x + 2] = Rock.value;
 
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
-                Boulder.Controls.Remove(Field.frame2[i][x + 2]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x + 2]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i][x + 1].Image = Image.FromFile("hero.jpg");
                 Field.frame2[i][x + 2].Image = Image.FromFile("rock.png");
@@ -600,7 +606,7 @@ namespace Boulder_Dach_GUI
             if ((x - 1) <= (Field.frame[i].Length - 1) && Field.frame[i][x + 1] == Sand.value)
             {
                 Field.frame[i][x + 1] = Empty.value;
-                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x + 1]);
                 Field.frame2[i][x + 1].Image = Image.FromFile("empty.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x + 1]);
 
@@ -613,7 +619,7 @@ namespace Boulder_Dach_GUI
             if ((x - 1) >= 0 && Field.frame[i][x - 1] == Sand.value)
             {
                 Field.frame[i][x - 1] = Empty.value;
-                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x - 1]);
                 Field.frame2[i][x - 1].Image = Image.FromFile("empty.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x - 1]);
 
@@ -627,13 +633,14 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i - 1][x] = Hero.value;
-                BoulderForm.Controls.Remove(Field.frame2[i][x]);
-                BoulderForm.Controls.Remove(Field.frame2[i - 1][x]);
+                //BoulderForm.Controls.Remove(Field.frame2[i][x]);
+                //BoulderForm.Controls.Remove(Field.frame2[i - 1][x]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i - 1][x].Image = Image.FromFile("hero.jpg");
                 BoulderForm.Controls.Add(Field.frame2[i][x]);
                 BoulderForm.Controls.Add(Field.frame2[i - 1][x]);
-
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i - 1][x].BringToFront();
 
                 //gameField.Renderer(BoulderForm);
                 AddScores(BoulderForm);
@@ -646,13 +653,14 @@ namespace Boulder_Dach_GUI
             {
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i + 1][x] = Hero.value;
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i + 1][x]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i + 1][x].Image = Image.FromFile("hero.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x]);
                 Boulder.Controls.Add(Field.frame2[i + 1][x]);
-
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i + 1][x].BringToFront();
                 //gameField.Renderer(BoulderForm);
                 AddScores(Boulder);
             }
@@ -664,12 +672,14 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x - 1] = Hero.value;
 
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i][x - 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x - 1]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i][x - 1].Image = Image.FromFile("hero.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x]);
                 Boulder.Controls.Add(Field.frame2[i][x - 1]);
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i][x - 1].BringToFront();
                 //gameField.Renderer(BoulderForm);
                 AddScores(Boulder);
             }
@@ -681,12 +691,14 @@ namespace Boulder_Dach_GUI
                 Field.frame[i][x] = Empty.value;
                 Field.frame[i][x + 1] = Hero.value;
 
-                Boulder.Controls.Remove(Field.frame2[i][x]);
-                Boulder.Controls.Remove(Field.frame2[i][x + 1]);
+                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                //Boulder.Controls.Remove(Field.frame2[i][x + 1]);
                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                 Field.frame2[i][x + 1].Image = Image.FromFile("hero.jpg");
                 Boulder.Controls.Add(Field.frame2[i][x]);
                 Boulder.Controls.Add(Field.frame2[i][x + 1]);
+                Field.frame2[i][x].BringToFront();
+                Field.frame2[i][x+1].BringToFront();
                 //gameField.Renderer(BoulderForm);
                 AddScores(Boulder);
             }
@@ -733,8 +745,8 @@ namespace Boulder_Dach_GUI
                                 Field.frame[i][x] = Empty.value;
                                 Field.frame[i + 1][x] = Rock.value;
 
-                                Boulder.Controls.Remove(Field.frame2[i][x]);
-                                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                                //Boulder.Controls.Remove(Field.frame2[i + 1][x]);
                                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                                 Field.frame2[i + 1][x].Image = Image.FromFile("rock.png");
                                 Boulder.Controls.Add(Field.frame2[i][x]);
@@ -940,10 +952,165 @@ namespace Boulder_Dach_GUI
                     }
                 }
                 Field.frame[1][1] = Hero.value;
+                Field.frame2[1][1].Image = Image.FromFile("hero.jpg");
                 BFS_res = BFS(1, 1);
             }
             while (BFS_res == false);
-            gameField.Renderer(Boulder);
+            //gameField.Renderer(Boulder);
+        }
+        public static void Intellectual(Form Boulder)
+        {
+            int temp, bs = 0, bd = 0, br = 0;
+            string prev = Sand.value;
+            do
+            {
+                BFS_x.Clear();
+                BFS_y.Clear();
+
+                gameField.maxpoint = 0;
+                bs = 0; bd = 0; br = 0;
+                prev = Sand.value;
+                for (int i = 1; i < Field.frame.Count - 1; i++)
+                {
+                    for (int x = 1; x < Field.frame[i].Length - 1; x++)
+                    {
+                        temp = rnd.Next() % 100;
+                        if (prev == Sand.value)
+                        {
+                            bs = 10;
+                            bd = 0;
+                            br = 0;
+                        }
+                        else if (prev == Diamong.value)
+                        {
+                            bs = 0;
+                            bd = 10;
+                            br = 0;
+                        }
+                        else if (prev == Rock.value)
+                        {
+                            bs = 0;
+                            bd = 0;
+                            br = 10;
+                        }
+                        if (temp < (70 + bs - bd - br))
+                        {
+                            Field.frame[i][x] = Sand.value;
+                            Field.frame2[i][x].Image = Image.FromFile("sand.jpg");
+                            prev = Sand.value;
+                        }
+                        else if (temp < 80 + bs + bd - br)
+                        {
+                            Field.frame[i][x] = Diamong.value;
+                            Field.frame2[i][x].Image = Image.FromFile("diamond.png");
+                            maxpoint += 100;
+                            prev = Diamong.value;
+                        }
+                        else if (temp < 100 + bs + bd + br)
+                        {
+                            Field.frame[i][x] = Rock.value;
+                            Field.frame2[i][x].Image = Image.FromFile("rock.png");
+                            prev = Rock.value;
+                        }
+                    }
+                }
+                
+
+                int h = rnd.Next() % 6, w = rnd.Next() % 15, num;
+                for (int i = 0; i < h; i++)
+                {
+                    num = rnd.Next() % 22;
+                    if (num < 3)
+                    {
+                        num = num + 3;
+                    }
+                    for (int x = 1; x < Field.frame[num].Length - 1; x++)
+                    {
+                        temp = rnd.Next() % 100;
+                        prev = Rock.value;
+                        if (prev == Sand.value)
+                        {
+                            bs = 10;
+                            br = 0;
+                        }
+                        else if (prev == Rock.value)
+                        {
+                            bs = 0;
+                            br = 10;
+                        }
+                        if (temp < 70 + br - bs)
+                        {
+                            if (Field.frame[num][x] == Diamong.value)
+                            {
+                                maxpoint = maxpoint - 100;
+                            }
+                            Field.frame[num][x] = Rock.value;
+                            Field.frame2[num][x].Image = Image.FromFile("rock.png");
+                            prev = Rock.value;
+                        }
+                        else
+                        {
+                            if (Field.frame[num][x] == Diamong.value)
+                            {
+                                maxpoint = maxpoint - 100;
+                            }
+                            Field.frame[num][x] = Sand.value;
+                            Field.frame2[num][x].Image = Image.FromFile("sand.jpg");
+                            prev = Sand.value;
+                        }
+                    }
+                }
+                for (int i = 0; i < w; i++)
+                {
+                    num = rnd.Next() % 77;
+                    if (num < 3)
+                    {
+                        num = num + 3;
+                    }
+                    for (int x = 1; x < Field.frame.Count() - 1; x++)
+                    {
+                        temp = rnd.Next() % 100;
+                        prev = Rock.value;
+                        if (prev == Sand.value)
+                        {
+                            bs = 10;
+                            br = 0;
+                        }
+                        else if (prev == Rock.value)
+                        {
+                            bs = 0;
+                            br = 10;
+                        }
+                        if (temp < 70 + br - bs)
+                        {
+                            if (Field.frame[x][num] == Diamong.value)
+                            {
+                                maxpoint = maxpoint - 100;
+                            }
+                            Field.frame[x][num] = Rock.value;
+                            Field.frame2[x][num].Image = Image.FromFile("rock.png");
+                            prev = Rock.value;
+                        }
+                        else
+                        {
+                            if (Field.frame[x][num] == Diamong.value)
+                            {
+                                maxpoint = maxpoint - 100;
+                            }
+                            Field.frame[x][num] = Sand.value;
+                            Field.frame2[x][num].Image = Image.FromFile("sand.jpg");
+                            prev = Sand.value;
+                        }
+                    }
+                }
+
+
+                Field.frame[1][1] = Hero.value;
+                Field.frame2[1][1].Image = Image.FromFile("hero.jpg");
+                BFS_res = BFS(1, 1);
+            }
+            while (BFS_res == false);
+            //gameField.Renderer(Boulder);
         }
         public static void MoveRock2(Form Boulder)
         {
@@ -960,8 +1127,8 @@ namespace Boulder_Dach_GUI
                                 Field.frame[i][x] = Empty.value;
                                 Field.frame[i + 1][x] = Rock.value;
 
-                                Boulder.Controls.Remove(Field.frame2[i][x]);
-                                Boulder.Controls.Remove(Field.frame2[i + 1][x]);
+                                //Boulder.Controls.Remove(Field.frame2[i][x]);
+                                //Boulder.Controls.Remove(Field.frame2[i + 1][x]);
                                 Field.frame2[i][x].Image = Image.FromFile("empty.jpg");
                                 Field.frame2[i + 1][x].Image = Image.FromFile("rock.png");
                                 Boulder.Controls.Add(Field.frame2[i][x]);
