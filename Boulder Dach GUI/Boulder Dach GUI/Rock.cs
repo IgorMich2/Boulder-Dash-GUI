@@ -1,15 +1,75 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+using System.Windows.Forms;
 namespace Boulder_Dach_GUI
 {
-    class Rock : Ceil
+    class Rock : Cell
     {
-        public static string value = "o";
-        public override string Value
+        public override char Value { get => 'o';  }
+        public static int RocksDownGravity = 0;
+        public override string path()
         {
-            get { return value; }
+            return "rock.jpg";
+        }
+        public static int CountRock()
+        {
+            int count = 0;
+
+            for (int y = Field.frame.Count - 2; y >= 0; y--)
+            {
+                for (int x = Field.frame[y].Count - 1; x >= 0; x--)
+                {
+                    if (Field.frame[y][x].Value == new Rock().Value)
+                    {
+                        if (Field.frame[y + 1][x].Value == new Empty().Value)
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+
+        public static void MoveRock1(Form Boulder)
+        {
+            for (int y = Field.frame.Count - 2; y >= 0; y--)
+            {
+                for (int x = Field.frame[y].Count - 1; x >= 0; x--)
+                {
+                    if (Field.frame[y][x].Value == new Rock().Value)
+                    {
+                        if (Field.frame[y + 1][x].Value == new Empty().Value)
+                        {
+                            Field.frame[y][x] = new Empty();
+                            Field.frame[y + 1][x] = new Rock();
+                            Logic.PrintCell(x, y, new Empty(), Boulder);
+                            Logic.PrintCell(x, y+1, new Rock(), Boulder);
+                            RocksDownGravity++;      
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void MoveRock2(Form Boulder)
+        {
+            for (int y = 0; y < Field.frame.Count - 1; y++)
+            {
+                for (int x = 0; x <= Field.frame[y].Count - 1; x++)
+                {
+                    if (Field.frame[y][x].Value == new Rock().Value)
+                    {
+                        if (Field.frame[y + 1][x].Value == new Empty().Value)
+                        {
+                            Field.frame[y][x] = new Empty();
+                            Field.frame[y + 1][x] = new Rock();
+                            Logic.PrintCell(x, y, new Empty(), Boulder);
+                            Logic.PrintCell(x, y + 1, new Rock(), Boulder);
+                            RocksDownGravity++;
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+using System.Windows.Forms;
 namespace Boulder_Dach_GUI
 {
-    class Sand : Ceil
+    class Sand : Cell
     {
-        public static string value = "*";
-        public override string Value
+        public override char Value { get => '*'; }
+        public override string path()
         {
-            get { return value; }
+            return "sand.jpg";
+        }
+        public override bool CanEnter()
+        {
+            return true;
         }
     }
 }

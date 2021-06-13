@@ -1,15 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+using System.Windows.Forms;
 namespace Boulder_Dach_GUI
 {
-    class Diamong : Ceil
+    class Diamond : Cell
     {
-        public static string value = "@";
-        public override string Value
+        public override char Value { get => '@'; }
+        public override bool CanEnter()
         {
-            get { return value; }
+            return true;
+        }
+        public override void OnEnter()
+        {
+            GameField.AddScores();
+        }
+
+        public override string path()
+        {
+            return "diamond.jpg";
         }
     }
 }

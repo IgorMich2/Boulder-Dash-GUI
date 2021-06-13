@@ -1,0 +1,10 @@
+Name: Vasya
+Result: Win
+Score: 3500
+Steps: 154
+Digs: 0
+Lives at the end: 491
+Time: 00:00:40.5853514
+Rock down by gravity: 17
+Rock moved by hero: 3
+Result: Win

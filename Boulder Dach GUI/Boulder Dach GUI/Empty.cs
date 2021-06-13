@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+using System.Windows.Forms;
 namespace Boulder_Dach_GUI
 {
-    class Empty : Ceil
+    class Empty : Cell
     {
-        public static string value = " ";
-        public override string Value
+        public override char Value { get => ' '; }
+
+        public override bool CanEnter()
         {
-            get { return value; }
+            return true;
+        }
+
+        public override string path()
+        {
+            return "empty.jpg";
         }
     }
 }
