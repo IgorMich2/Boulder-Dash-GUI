@@ -95,33 +95,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CC\BorderCell.cs" />
+    <Compile Include="Common codebase\BorderCell.cs" />
     <Compile Include="Boulder Dach.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Boulder Dach.Designer.cs">
       <DependentUpon>Boulder Dach.cs</DependentUpon>
     </Compile>
-    <Compile Include="CC\Cell.cs" />
-    <Compile Include="CC\Database.cs" />
-    <Compile Include="CC\Diamond.cs" />
-    <Compile Include="CC\Empty.cs" />
-    <Compile Include="CC\Field.cs" />
-    <Compile Include="CC\GameField.cs" />
-    <Compile Include="CC\GenerationLevel.cs" />
+    <Compile Include="Common codebase\Cell.cs" />
+    <Compile Include="Common codebase\Database.cs" />
+    <Compile Include="Common codebase\Diamond.cs" />
+    <Compile Include="Common codebase\Empty.cs" />
+    <Compile Include="Common codebase\Field.cs" />
+    <Compile Include="Common codebase\GameField.cs" />
+    <Compile Include="Common codebase\GenerationLevel.cs" />
     <Compile Include="Gravity.cs" />
-    <Compile Include="CC\Hero.cs" />
-    <Compile Include="CC\Levels.cs" />
-    <Compile Include="CC\Lives.cs" />
+    <Compile Include="Common codebase\Hero.cs" />
+    <Compile Include="Common codebase\Levels.cs" />
+    <Compile Include="Common codebase\Lives.cs" />
+    <Compile Include="LevelEditor.cs" />
     <Compile Include="MovingHero.cs" />
     <Compile Include="MovingRocks.cs" />
     <Compile Include="Output.cs" />
-    <Compile Include="CC\Music.cs" />
+    <Compile Include="Common codebase\Music.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CC\Rock.cs" />
-    <Compile Include="CC\Sand.cs" />
-    <Compile Include="CC\TextCell.cs" />
+    <Compile Include="Common codebase\Rock.cs" />
+    <Compile Include="Common codebase\Sand.cs" />
+    <Compile Include="Common codebase\TextCell.cs" />
     <EmbeddedResource Include="Boulder Dach.resx">
       <DependentUpon>Boulder Dach.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,10 +150,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CC\Results.mdf">
+    <Content Include="Common codebase\Results.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="CC\Results_log.ldf">
+    <Content Include="Common codebase\Results_log.ldf">
       <DependentUpon>Results.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
