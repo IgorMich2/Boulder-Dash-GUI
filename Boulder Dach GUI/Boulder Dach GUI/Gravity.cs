@@ -11,26 +11,22 @@ namespace Boulder_Dach_GUI
         {
             while (true)
             {
-                try
+                if (GameField.GameStatus)
                 {
-                    if (GameField.GameStatus == true)
+                    if (Rock.CountRock() == 1)
                     {
-                        if (Rock.CountRock() == 1)
-                        {
-                            Rock.MoveRock1(Boulder);
-                        }
-                        else if (Rock.CountRock() > 1)
-                        {
-
-                            Rock.MoveRock1(Boulder);
-                            for (int i = 0; i < 5; i++)
-                                Rock.MoveRock2(Boulder);
-
-                        }
+                        MovingRocks.MoveRock1(Boulder);
                     }
-                    Thread.Sleep(200);
+                    else if (Rock.CountRock() > 1)
+                    {
+
+                        MovingRocks.MoveRock1(Boulder);
+                        for (int i = 0; i < 5; i++)
+                            MovingRocks.MoveRock2(Boulder);
+
+                    }
                 }
-                catch { }
+                Thread.Sleep(200);
             }
         }
     }

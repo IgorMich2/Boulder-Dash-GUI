@@ -29,12 +29,12 @@ namespace Boulder_Dach_GUI
                     {
                         Boulder.BeginInvoke((MethodInvoker)delegate ()
                         {
-                            Logic.Game(Boulder);
+                            Output.Game(Boulder);
                         });
                     }
                     else
                     {
-                        Logic.Game(Boulder);
+                        Output.Game(Boulder);
                     }
                     Thread.Sleep(1000);
                 }
@@ -49,7 +49,7 @@ namespace Boulder_Dach_GUI
             Hero.FindHero();
             while (true)
             {
-                Logic.GenereateInfo(Boulder);
+                Output.GenereateInfo(Boulder);
                 Hero.FindHero();
                 Hero.steps = 0;
                 Hero.digs = 0;
@@ -167,9 +167,9 @@ namespace Boulder_Dach_GUI
                 if (openfile == false && GameField.TechnicalLevel == false && Levels.Failedload == false)
                 {
                     GameField.Time = DateTime.Now;
-                    Logic.GameStart(Boulder);
-                    Logic.GenereateInfo(Boulder);
-                    Levels.Renderer(Boulder);
+                    Output.GameStart(Boulder);
+                    Output.GenereateInfo(Boulder);
+                    Output.Renderer(Boulder);
                     //LoadLevel();
 
                     Hero.FindHero();
@@ -183,20 +183,20 @@ namespace Boulder_Dach_GUI
                         Thread.Sleep(1000);
                     }
                     GameField.GameStatus = false;
-                    Logic.GameClear(Boulder);
+                    Output.GameClear(Boulder);
                     if (GameField.score >= GameField.maxpoint)
                     {
-                        Database.EndLevel("Win", Boulder);
+                        Database.EndLevel("Win");
                     }
                     else
                     {
-                        Database.EndLevel("Defeat", Boulder);
+                        Database.EndLevel("Defeat");
                     }
                 }
                 else if (GameField.TechnicalLevel == true)
                 {
-                    Levels.Renderer(Boulder);
-                    Logic.GenereateInfo(Boulder);
+                    Output.Renderer(Boulder);
+                    Output.GenereateInfo(Boulder);
 
                     Hero.FindHero();
 
@@ -229,7 +229,7 @@ namespace Boulder_Dach_GUI
                 Levels.GetArrayFromFile("menu.txt");
 
                 //LoadLevel();
-                Levels.Renderer(Boulder);
+                Output.Renderer(Boulder);
                 
                 GameField.TechnicalLevel = false;
             }
@@ -242,7 +242,7 @@ namespace Boulder_Dach_GUI
             Thread music = new Thread(Music.MusicFunction);
             music.Priority = ThreadPriority.Lowest;
 
-            Thread lives = new Thread((() => Lives.LivesFunction(Temp)));
+            Thread lives = new Thread(Lives.LivesFunction);
             lives.Priority = ThreadPriority.Lowest;
 
             Thread gravity = new Thread(()=>Gravity.GravityFunction(Temp));
@@ -254,7 +254,7 @@ namespace Boulder_Dach_GUI
 
             Levels.GetArrayFromFile("menu.txt");
             //LoadLevel();
-            Levels.Renderer(this);
+            Output.Renderer(this);
 
             Thread GameFunctionThread = new Thread(()=>GameFunction(Temp));
             GameFunctionThread.Priority = ThreadPriority.Lowest;
@@ -263,14 +263,14 @@ namespace Boulder_Dach_GUI
             music.Start();
             lives.Start();
             gravity.Start();
-            Logic.GenereateInfo(this);
+            Output.GenereateInfo(this);
         }
 
         private void BoulderForm_KeyDown(object sender, KeyEventArgs e)
         {
-            Hero.MoveHero(e, this);
+            MovingHero.MoveHero(e, this);
 
-            Logic.InfoSteps(this);
+            Output.InfoSteps(this);
 
         }
 
