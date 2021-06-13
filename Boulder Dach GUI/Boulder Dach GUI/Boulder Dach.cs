@@ -152,6 +152,17 @@ namespace Boulder_Dach_GUI
                             System.Environment.Exit(0);
                             break;
                         }
+                    case 13:
+                        {
+                            Levels.GetArrayFromFile("5.txt");
+                            GameField.TechnicalLevel = true;
+                            break;
+                        }
+                    case 14:
+                        {
+                            Levels.GetArrayFromFile("5.txt");
+                            break;
+                        }
                 }
                 if (Boulder.InvokeRequired)
                 {
@@ -193,7 +204,7 @@ namespace Boulder_Dach_GUI
                         Database.EndLevel("Defeat");
                     }
                 }
-                else if (GameField.TechnicalLevel == true)
+                else if (GameField.TechnicalLevel == true && choose != 13)
                 {
                     Output.Renderer(Boulder);
                     Output.GenereateInfo(Boulder);
@@ -208,6 +219,21 @@ namespace Boulder_Dach_GUI
                             break;
                         }
                         Thread.Sleep(500);
+                    }
+                }
+                else
+                {
+                    Output.Renderer(Boulder);
+                    LevelEditor.on = true;
+
+                    while (true)
+                    {              
+                        if (LevelEditor.exit)
+                        {
+                            LevelEditor.on = false;
+                            break;
+                        }
+                        Thread.Sleep(1000);
                     }
                 }
 
@@ -268,9 +294,47 @@ namespace Boulder_Dach_GUI
 
         private void BoulderForm_KeyDown(object sender, KeyEventArgs e)
         {
-            MovingHero.MoveHero(e, this);
-
-            Output.InfoSteps(this);
+            if (!LevelEditor.on)
+            {
+                MovingHero.MoveHero(e, this);
+                Output.InfoSteps(this);
+            }
+            else
+            {
+                switch (e.KeyData)
+                {
+                    case Keys.W:
+                        {
+                            LevelEditor.MoveCursor(-1, 0);
+                            break;
+                        }
+                    case Keys.A:
+                        {
+                            LevelEditor.MoveCursor(0, -1);
+                            break;
+                        }
+                    case Keys.D:
+                        {
+                            LevelEditor.MoveCursor(0, 1);
+                            break;
+                        }
+                    case Keys.S:
+                        {
+                            LevelEditor.MoveCursor(1, 0);
+                            break;
+                        }
+                    case Keys.Space:
+                        {
+                            LevelEditor.ChangeCell(this);
+                            break;
+                        }
+                    case Keys.Escape:
+                        {
+                            LevelEditor.exit = true;
+                            break;
+                        }
+                }
+            }
 
         }
 
