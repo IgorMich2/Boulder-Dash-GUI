@@ -1,0 +1,110 @@
+Id: 5
+Name: Igor
+Result: 11500
+Steps: 0
+Digs: 0
+Lives at the end: 500
+Time: 00:00:13.0497292
+Rock down by gravity: 0
+Rock moved by hero: 0
+Result: Win       
+
+Id: 6
+Name: Vitaliy Lyapota
+Result: 14000
+Steps: 0
+Digs: 0
+Lives at the end: 500
+Time: 00:00:35.0353526
+Rock down by gravity: 0
+Rock moved by hero: 0
+Result: Win       
+
+Id: 7
+Name: Igor Michurin
+Result: 3400
+Steps: 642
+Digs: 7
+Lives at the end: 500
+Time: 00:09:19.9524423
+Rock down by gravity: 8
+Rock moved by hero: 18
+Result: Win       
+
+Id: 8
+Name: Vitalik
+Result: 3400
+Steps: 471
+Digs: 7
+Lives at the end: 499
+Time: 00:02:05.8730389
+Rock down by gravity: 34
+Rock moved by hero: 0
+Result: Win       
+
+Id: 9
+Name: Watcher
+Result: 3400
+Steps: 437
+Digs: 0
+Lives at the end: 500
+Time: 00:01:15.2806328
+Rock down by gravity: 0
+Rock moved by hero: 5
+Result: Win       
+
+Id: 10
+Name: Petya
+Result: 3500
+Steps: 139
+Digs: 0
+Lives at the end: 490
+Time: 00:00:32.8259754
+Rock down by gravity: 17
+Rock moved by hero: 3
+Result: Win       
+
+Id: 11
+Name: as
+Result: 3500
+Steps: 114
+Digs: 0
+Lives at the end: 485
+Time: 00:00:43.5787403
+Rock down by gravity: 17
+Rock moved by hero: 3
+Result: Defeat    
+
+Id: 12
+Name: 
+Result: 3500
+Steps: 4
+Digs: 0
+Lives at the end: 500
+Time: 00:00:30.5084824
+Rock down by gravity: 0
+Rock moved by hero: 0
+Result: Win       
+
+Id: 13
+Name: Igor
+Result: 3400
+Steps: 452
+Digs: 2
+Lives at the end: 490
+Time: 00:05:20.4493823
+Rock down by gravity: 10
+Rock moved by hero: 6
+Result: Defeat    
+
+Id: 14
+Name: Vasya
+Result: 3500
+Steps: 154
+Digs: 0
+Lives at the end: 491
+Time: 00:00:40.8240196
+Rock down by gravity: 17
+Rock moved by hero: 3
+Result: Win       
+

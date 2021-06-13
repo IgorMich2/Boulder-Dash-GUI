@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E434040B-2700-4DF1-AA0F-B1F580B60F62}</ProjectGuid>
+    <ProjectGuid>{C634936D-3D1D-4D7B-88C8-C98C5F5DCE2A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Boulder_Dach_GUI</RootNamespace>
     <AssemblyName>Boulder Dach GUI</AssemblyName>
@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,10 +47,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
@@ -62,6 +75,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.2\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
@@ -79,25 +95,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ceil.cs" />
-    <Compile Include="Diamond.cs" />
-    <Compile Include="Empty.cs" />
-    <Compile Include="Field.cs" />
-    <Compile Include="Boulder Dash.cs">
+    <Compile Include="CC\BorderCell.cs" />
+    <Compile Include="Boulder Dach.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Boulder Dash.Designer.cs">
-      <DependentUpon>Boulder Dash.cs</DependentUpon>
+    <Compile Include="Boulder Dach.Designer.cs">
+      <DependentUpon>Boulder Dach.cs</DependentUpon>
     </Compile>
-    <Compile Include="gameField.cs" />
-    <Compile Include="Hero.cs" />
-    <Compile Include="Music.cs" />
+    <Compile Include="CC\Cell.cs" />
+    <Compile Include="CC\Database.cs" />
+    <Compile Include="CC\Diamond.cs" />
+    <Compile Include="CC\Empty.cs" />
+    <Compile Include="CC\Field.cs" />
+    <Compile Include="CC\GameField.cs" />
+    <Compile Include="CC\GenerationLevel.cs" />
+    <Compile Include="Gravity.cs" />
+    <Compile Include="CC\Hero.cs" />
+    <Compile Include="CC\Levels.cs" />
+    <Compile Include="CC\Lives.cs" />
+    <Compile Include="MovingHero.cs" />
+    <Compile Include="MovingRocks.cs" />
+    <Compile Include="Output.cs" />
+    <Compile Include="CC\Music.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rock.cs" />
-    <Compile Include="Sand.cs" />
-    <EmbeddedResource Include="Boulder Dash.resx">
-      <DependentUpon>Boulder Dash.cs</DependentUpon>
+    <Compile Include="CC\Rock.cs" />
+    <Compile Include="CC\Sand.cs" />
+    <Compile Include="CC\TextCell.cs" />
+    <EmbeddedResource Include="Boulder Dach.resx">
+      <DependentUpon>Boulder Dach.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -123,45 +149,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="BUTTONLib">
-      <Guid>{01350040-1122-11DB-9380-000D56C6051A}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>3</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="ONAddInForWord">
-      <Guid>{238AA1AC-786F-4C17-BAAB-253670B449B9}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="ONButtonAddInForPPT">
-      <Guid>{9D58B963-654A-4625-86AC-345062F53232}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="stdole">
-      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
+    <Content Include="CC\Results.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CC\Results_log.ldf">
+      <DependentUpon>Results.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="logo.ico" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
