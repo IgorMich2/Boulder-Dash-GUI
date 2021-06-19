@@ -11,7 +11,7 @@ namespace Boulder_Dach_GUI
         }
         public override void OnEnter()
         {
-            GameField.AddScores();
+            GameField.AddScores(100);
         }
 
         public override string path()

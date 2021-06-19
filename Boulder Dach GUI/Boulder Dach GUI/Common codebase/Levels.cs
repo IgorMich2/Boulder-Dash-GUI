@@ -14,8 +14,12 @@ namespace Boulder_Dach_GUI
             {
                 case "@":
                     return new Diamond();
+                case "$":
+                    return new RareDiamond();
                 case "*":
                     return new Sand();
+                case "&":
+                    return new Portal();
                 case " ":
                     return new Empty();
                 case "I":

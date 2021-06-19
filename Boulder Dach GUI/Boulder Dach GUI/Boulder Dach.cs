@@ -184,6 +184,7 @@ namespace Boulder_Dach_GUI
                     //LoadLevel();
 
                     Hero.FindHero();
+                    Portal.FindPortals();
                     GameField.GameStatus = true;
                     while (true)
                     {
@@ -302,6 +303,10 @@ namespace Boulder_Dach_GUI
             GameFunctionThread.Priority = ThreadPriority.Lowest;
             GameFunctionThread.Start();
 
+            Thread UpdateField = new Thread(()=>Output.UpdateField(Temp));
+            UpdateField.Priority = ThreadPriority.Lowest;
+            UpdateField.Start();
+            
             music.Start();
             lives.Start();
             gravity.Start();

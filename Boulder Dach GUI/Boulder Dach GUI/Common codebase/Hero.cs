@@ -100,6 +100,10 @@ namespace Boulder_Dach_GUI
             {
                 Music.waveOut.Stop();
             }
+            else if ("U" == keyInfo)
+            {
+                Output.switchupdate = true;
+            }
         }
 
         public static void GoHero(int y, int x)
@@ -107,9 +111,14 @@ namespace Boulder_Dach_GUI
             if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && (Field.frame[y][x].CanEnter() == true))
             {
                 bool isdiamond = false;
+                bool israrediamond = false;
                 if (Field.frame[y][x].Value == new Diamond().Value)
                 {
                     isdiamond = true;
+                }
+                else if (Field.frame[y][x].Value == new RareDiamond().Value)
+                {
+                    israrediamond = true;
                 }
                 Field.frame[Hero.y][Hero.x] = new Empty();
                 Field.frame[y][x] = new Hero();
@@ -123,7 +132,11 @@ namespace Boulder_Dach_GUI
                 Hero.y = y;
                 if (isdiamond)
                 {
-                    GameField.AddScores();
+                    GameField.AddScores(100);
+                }
+                else if (israrediamond)
+                {
+                    GameField.AddScores(500);
                 }
             }
             else if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && x + (x - Hero.x) > 0 && x + (x - Hero.x) < Field.frame[0].Count && Math.Abs(x - Hero.x) == 1 && Field.frame[y][x + (x - Hero.x)].Value == new Empty().Value && Field.frame[y][x].Value == new Rock().Value)
@@ -145,6 +158,10 @@ namespace Boulder_Dach_GUI
                 RocksMoveByHero++;
             }
             steps++;
+            if (Field.frame[Hero.y - 1][Hero.x].Value == new Portal().Value || Field.frame[Hero.y][Hero.x - 1].Value == new Portal().Value || Field.frame[Hero.y + 1][Hero.x].Value == new Portal().Value || Field.frame[Hero.y][Hero.x + 1].Value == new Portal().Value)
+            {
+                Portal.Teleportation();
+            }
         }
         public static void GoDig(int y, int x)
         {

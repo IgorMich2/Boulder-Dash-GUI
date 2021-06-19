@@ -121,6 +121,8 @@
     <Compile Include="Common codebase\Rock.cs" />
     <Compile Include="Common codebase\Sand.cs" />
     <Compile Include="Common codebase\TextCell.cs" />
+    <Compile Include="Common codebase\RareDiamond.cs" />
+    <Compile Include="Common codebase\Portal.cs" />
     <EmbeddedResource Include="Boulder Dach.resx">
       <DependentUpon>Boulder Dach.cs</DependentUpon>
     </EmbeddedResource>

@@ -19,6 +19,7 @@ namespace Boulder_Dach_GUI
         public static bool switcherempty = false;
         public static bool switcherhero = false;
         public static bool switchervalue = false;
+        public static bool switchupdate = false;
         public static (int x, int y) Rockcoordinates;
         public static (int x, int y) Emptycoordinates;
         public static (int x, int y) Herocoordinates;
@@ -210,6 +211,25 @@ namespace Boulder_Dach_GUI
                 {
                     Output.PrintCell(j, i, Field.frame[i][j], Boulder);
                 }
+            }
+        }
+
+        public static void UpdateField(Form Boulder)
+        {
+            while (true)
+            {
+                if (switchupdate)
+                {
+                    for (int i = 0; i < Field.frame.Count; i++)
+                    {
+                        for (int j = 0; j < Field.frame[0].Count; j++)
+                        {
+                            Output.PrintCell(j, i, Field.frame[i][j], Boulder);
+                        }
+                    }
+                    switchupdate = false;
+                }
+                Thread.Sleep(5000);
             }
         }
 

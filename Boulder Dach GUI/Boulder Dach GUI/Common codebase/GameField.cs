@@ -55,10 +55,11 @@ namespace Boulder_Dach_GUI
             win = false;
         }
 
-        public static void AddScores()
+        public static void AddScores(int delta)
         {
-            GameField.score += 100;
+            GameField.score += delta;
             if (GameField.score >= GameField.maxpoint && TechnicalLevel == false) GameField.Win();
         }
+
     }
 }

@@ -39,6 +39,10 @@ namespace Boulder_Dach_GUI
                     {
                         BFSScore = BFSScore + 100;
                     }
+                    else if (Field.frame[i1][i2].Value == new RareDiamond().Value)
+                    {
+                        BFSScore = BFSScore + 500;
+                    }
                     DFSStep(i1 + 1, i2);
                     DFSStep(i1 - 1, i2);
                     DFSStep(i1, i2 + 1);
@@ -91,6 +95,10 @@ namespace Boulder_Dach_GUI
             while (BFSQuery.Count != 0)
             {
                 if (Field.frame[BFSQuery[0].y][BFSQuery[0].x].Value == new Diamond().Value)
+                {
+                    return (BFSQuery[0].distance);
+                }
+                if (Field.frame[BFSQuery[0].y][BFSQuery[0].x].Value == new RareDiamond().Value)
                 {
                     return (BFSQuery[0].distance);
                 }
@@ -161,8 +169,16 @@ namespace Boulder_Dach_GUI
                         }
                         else if (temp < 80 + bs + bd - br)
                         {
-                            Field.frame[i][x] = new Diamond();
-                            GameField.maxpoint += 100;
+                            if (temp % 9 == 0)
+                            {
+                                Field.frame[i][x] = new RareDiamond();
+                                GameField.maxpoint += 500;
+                            }
+                            else
+                            {
+                                Field.frame[i][x] = new Diamond();
+                                GameField.maxpoint += 100;
+                            }
                             prev = new Diamond();
                         }
                         else if (temp < 100 + bs + bd + br)
@@ -221,8 +237,16 @@ namespace Boulder_Dach_GUI
                         }
                         else if (temp < 80 + bs + bd - br)
                         {
-                            Field.frame[i][x] = new Diamond();
-                            GameField.maxpoint += 100;
+                            if (temp % 9 == 0)
+                            {
+                                Field.frame[i][x] = new RareDiamond();
+                                GameField.maxpoint += 500;
+                            }
+                            else
+                            {
+                                Field.frame[i][x] = new Diamond();
+                                GameField.maxpoint += 100;
+                            }
                             prev = new Diamond().Value;
                         }
                         else if (temp < 100 + bs + bd + br)
