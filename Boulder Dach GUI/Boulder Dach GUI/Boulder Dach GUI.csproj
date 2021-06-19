@@ -109,13 +109,11 @@
     <Compile Include="Common codebase\Field.cs" />
     <Compile Include="Common codebase\GameField.cs" />
     <Compile Include="Common codebase\GenerationLevel.cs" />
-    <Compile Include="Gravity.cs" />
+    <Compile Include="Common codebase\Gravity.cs" />
     <Compile Include="Common codebase\Hero.cs" />
     <Compile Include="Common codebase\Levels.cs" />
     <Compile Include="Common codebase\Lives.cs" />
     <Compile Include="LevelEditor.cs" />
-    <Compile Include="MovingHero.cs" />
-    <Compile Include="MovingRocks.cs" />
     <Compile Include="Output.cs" />
     <Compile Include="Common codebase\Music.cs" />
     <Compile Include="Program.cs" />

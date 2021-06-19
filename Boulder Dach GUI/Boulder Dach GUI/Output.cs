@@ -6,11 +6,25 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.VisualBasic;
+using System.ComponentModel;
+using System.Data;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Boulder_Dach_GUI
 {
     class Output
-        {
+    {
+        public static bool switcherrocks = false;
+        public static bool switcherempty = false;
+        public static bool switcherhero = false;
+        public static bool switchervalue = false;
+        public static (int x, int y) Rockcoordinates;
+        public static (int x, int y) Emptycoordinates;
+        public static (int x, int y) Herocoordinates;
+        public static (int x, int y) Valuecoordinates;
+        public static string valuefile;
+
         //public static Form Boulder;
         public static Graphics e;
         public static void Set(Graphics test)
@@ -22,24 +36,23 @@ namespace Boulder_Dach_GUI
 
         public static void ArrayStart()
         {
-            
+
         }
 
-            public static void PrintCell(int x, int y, Cell Printed, Form Boulder)
+        public static void PrintCell(int x, int y, Cell Printed, Form Boulder)
         {
             PictureBox Test = new PictureBox();
             Test.SizeMode = PictureBoxSizeMode.StretchImage;
-            Test.Location = new Point(x*20, y*20);
+            Test.Location = new Point(x * 20, y * 20);
             Test.Size = new Size(20, 20);
             Test.Image = Image.FromFile(Printed.path());
             Test.BringToFront();
-            //Bitmap test = new Bitmap(Printed.path(), true);
-            //Image Test = Image.FromFile(Printed.path());
+
             if (Boulder.InvokeRequired)
             {
                 Boulder.BeginInvoke((MethodInvoker)delegate ()
                 {
-                    
+
                     //Boulder.Controls.Add(test);
                     Boulder.Controls.Add(Test);
                     Test.BringToFront();
@@ -50,7 +63,133 @@ namespace Boulder_Dach_GUI
                 Boulder.Controls.Add(Test);
                 Test.BringToFront();
             }
+        }
 
+        public static void PrintingRocks(Form Boulder)
+        {
+            while (true)
+            {
+                if (switcherrocks) {
+                    PictureBox Test = new PictureBox();
+                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
+                    Test.Location = new Point(Rockcoordinates.x, Rockcoordinates.y);
+                    Test.Size = new Size(20, 20);
+                    Test.Image = Image.FromFile("rock.jpg");
+                    Test.BringToFront();
+
+                    if (Boulder.InvokeRequired)
+                    {
+                        Boulder.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            Boulder.Controls.Add(Test);
+                            Test.BringToFront();
+                        });
+                    }
+                    else
+                    {
+                        Boulder.Controls.Add(Test);
+                        Test.BringToFront();
+                    }
+                    switcherrocks = false;
+                }
+                Thread.Sleep(200);
+            }
+        }
+
+        public static void PrintingEmptyies(Form Boulder)
+        {
+            while (true)
+            {
+                if (switcherempty)
+                {
+                    PictureBox Test = new PictureBox();
+                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
+                    Test.Location = new Point(Emptycoordinates.x, Emptycoordinates.y);
+                    Test.Size = new Size(20, 20);
+                    Test.Image = Image.FromFile("empty.jpg");
+                    Test.BringToFront();
+
+                    if (Boulder.InvokeRequired)
+                    {
+                        Boulder.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            Boulder.Controls.Add(Test);
+                            Test.BringToFront();
+                        });
+                    }
+                    else
+                    {
+                        Boulder.Controls.Add(Test);
+                        Test.BringToFront();
+                    }
+                    switcherempty = false;
+                }
+                Thread.Sleep(100);
+            }
+        }
+
+        public static void PrintingHero(Form Boulder)
+        {
+            while (true)
+            {
+                if (switcherhero)
+                {
+                    PictureBox Test = new PictureBox();
+                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
+                    Test.Location = new Point(Herocoordinates.x, Herocoordinates.y);
+                    Test.Size = new Size(20, 20);
+                    Test.Image = Image.FromFile("hero.jpg");
+                    Test.BringToFront();
+
+                    if (Boulder.InvokeRequired)
+                    {
+                        Boulder.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            Boulder.Controls.Add(Test);
+                            Test.BringToFront();
+                        });
+                    }
+                    else
+                    {
+                        Boulder.Controls.Add(Test);
+                        Test.BringToFront();
+                    }
+                    switcherhero = false;
+                }
+                Thread.Sleep(100);
+            }
+        }
+
+        public static void PrintingValue(Form Boulder)
+        {
+            while (true)
+            {
+                if (switchervalue)
+                {
+                    PictureBox Test = new PictureBox();
+                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
+                    Test.Location = new Point(Valuecoordinates.x, Valuecoordinates.y);
+                    Test.Size = new Size(20, 20);
+                    Test.Image = Image.FromFile(valuefile + ".jpg");
+                    Test.BringToFront();
+
+                    if (Boulder.InvokeRequired)
+                    {
+                        Boulder.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            Boulder.Controls.Add(Test);
+                            Test.BringToFront();
+                        });
+                    }
+                    else
+                    {
+                        Boulder.Controls.Add(Test);
+                        Test.BringToFront();
+                    }
+                    switchervalue = false;
+                }
+                Thread.Sleep(100);
+            }
         }
 
         public static void Clear()
@@ -273,7 +412,7 @@ namespace Boulder_Dach_GUI
 
         public static void GameClear(Form Boulder)
         {
-            
+
             if (Boulder.InvokeRequired)
             {
                 Boulder.BeginInvoke((MethodInvoker)delegate ()
