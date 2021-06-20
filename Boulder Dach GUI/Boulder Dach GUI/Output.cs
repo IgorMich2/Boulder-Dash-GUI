@@ -26,13 +26,6 @@ namespace Boulder_Dach_GUI
         public static (int x, int y) Valuecoordinates;
         public static string valuefile;
 
-        //public static Form Boulder;
-        public static Graphics e;
-        public static void Set(Graphics test)
-        {
-            e = test;
-        }
-
         public static Label[] Last = new Label[9];
 
         public static void ArrayStart()
@@ -485,17 +478,7 @@ namespace Boulder_Dach_GUI
 
         public static string GetName()
         {
-
-            /*if (MessageBox.Show("Введите имя игрока",
-                "Boulder Dash by Igor Michurin",
-                ,
-                MessageBoxIcon.Asterisk,
-                MessageBoxDefaultButton.Button1) != DialogResult.Yes)
-            {
-                e.Cancel = true;
-            }*/
             string input = Interaction.InputBox("Введите имя игрока", "Сохранение результата", "");
-
 
             return input;
         }
