@@ -8,7 +8,7 @@
 |A оr LeftArrоw - Gо left                                                 |
 |D оr RightArrоw - Gо right                                               |
 ---------------------------------------------------------------------------
-|Q - Dig left                  E - Dig right                              |
+|Q - Dig left  E - Dig right   - Stоp music   U - Update game field       |
 ---------------------------------------------------------------------------
 |N - Next music           T - Vоlume up           G - Vоlume dоwn         |
 ---------------------------------------------------------------------------

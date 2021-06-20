@@ -20,7 +20,7 @@ namespace Boulder_Dach_GUI
         public static List<int> RockDowns = new List<int>();
         public static List<int> RockMoved = new List<int>();
         public static List<string> Results = new List<string>();
-
+        public static List<int> Teleportations = new List<int>();
 
         public static void GetResults()
         {
@@ -43,6 +43,7 @@ namespace Boulder_Dach_GUI
                     int rockdown = reader.GetInt32(7);
                     int rockmoved = reader.GetInt32(8);
                     string result = reader.GetString(9);
+                    int teleportation = reader.GetInt32(10);
 
                     ids.Add(id);
                     names.Add(name);
@@ -54,6 +55,7 @@ namespace Boulder_Dach_GUI
                     RockDowns.Add(rockdown);
                     RockMoved.Add(rockmoved);
                     Results.Add(result);
+                    Teleportations.Add(teleportation);
                 }
             }
 
@@ -65,7 +67,7 @@ namespace Boulder_Dach_GUI
                 {
                     sw.WriteLine("Id: " + ids[i]);
                     sw.WriteLine("Name: " + names[i]);
-                    sw.WriteLine("Result: " + scores[i]);
+                    sw.WriteLine("Scores: " + scores[i]);
                     sw.WriteLine("Steps: " + steps[i]);
                     sw.WriteLine("Digs: " + digs[i]);
                     sw.WriteLine("Lives at the end: " + lives[i]);
@@ -73,6 +75,7 @@ namespace Boulder_Dach_GUI
                     sw.WriteLine("Rock down by gravity: " + RockDowns[i]);
                     sw.WriteLine("Rock moved by hero: " + RockMoved[i]);
                     sw.WriteLine("Result: " + Results[i]);
+                    sw.WriteLine("Teleportations: " + Teleportations[i]);
                     sw.WriteLine("");
                 }
             }
@@ -126,8 +129,7 @@ namespace Boulder_Dach_GUI
 
             using (StreamWriter sw = new StreamWriter(writePath))
             {
-                sw.WriteLine("Name: " + name);
-                sw.WriteLine("Result: " + result);
+                sw.WriteLine("Name: " + name);        
                 sw.WriteLine("Score: " + GameField.score);
                 sw.WriteLine("Steps: " + Hero.steps);
                 sw.WriteLine("Digs: " + Hero.digs);
@@ -136,12 +138,13 @@ namespace Boulder_Dach_GUI
                 sw.WriteLine("Rock down by gravity: " + Rock.RocksDownGravity);
                 sw.WriteLine("Rock moved by hero: " + Hero.RocksMoveByHero);
                 sw.WriteLine("Result: " + result);
+                sw.WriteLine("Teleportations: " + Hero.Teleportation);
                 sw.Close();
             }
             GameField.score = GameField.maxpoint;
             Process.Start(new ProcessStartInfo(@"result.txt") { UseShellExecute = true });
 
-            try
+            //try
             {
                 using (SqlConnection connection = new SqlConnection(ConnStr))
                 using (var cmd1 = new SqlDataAdapter())
@@ -152,14 +155,14 @@ namespace Boulder_Dach_GUI
                     //cmd.CommandText = "INSERT INTO Players (Name, Score, Steps, Digs, Livesend) VALUES ('" + name+"', "+score+", "+Hero.steps+ ", " + Hero.digs + ", " + Hero.lives + ")";
                     //cmd.CommandText = "INSERT INTO Players (Name, Score) VALUES ('" + name + "', " + score + ")";
                     string time = Convert.ToString(DateTime.Now - GameField.Time);
-                    cmd.CommandText = "INSERT INTO Players (Name, Score, Steps, Digs, Livesend, Time, RockDown, RockMoveByHero, Result) VALUES ('" + name + "', " + GameField.score + ", " + Hero.steps + ", " + Hero.digs + ", " + Hero.lives + ",'" + time + "'" + ", " + Rock.RocksDownGravity + ", " + Hero.RocksMoveByHero + ", " + "'" + result + "')";
+                    cmd.CommandText = "INSERT INTO Players (Name, Score, Steps, Digs, Livesend, Time, RockDown, RockMoveByHero, Result, Teleportation) VALUES ('" + name + "', " + GameField.score + ", " + Hero.steps + ", " + Hero.digs + ", " + Hero.lives + ",'" + time + "'" + ", " + Rock.RocksDownGravity + ", " + Hero.RocksMoveByHero + ", " + "'" + result + "', " + Hero.Teleportation + ")";
                     cmd.ExecuteNonQuery();
                 }
 
             }
-            catch (SqlException ex)
+            //catch (SqlException ex)
             {
-                Output.Exception(ex);
+              //  Output.Exception(ex);
             }
 
         }

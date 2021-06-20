@@ -1,10 +1,10 @@
-Name: Имя
+Name: Vitalik
+Score: 18700
+Steps: 0
+Digs: 0
+Lives at the end: 500
+Time: 00:00:38.8173616
+Rock down by gravity: 0
+Rock moved by hero: 0
 Result: Win
-Score: 12500
-Steps: 168
-Digs: 1
-Lives at the end: 464
-Time: 00:02:29.1037340
-Rock down by gravity: 17
-Rock moved by hero: 1
-Result: Win
+Teleportations: 0

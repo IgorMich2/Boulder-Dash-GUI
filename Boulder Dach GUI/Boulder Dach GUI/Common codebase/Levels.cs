@@ -41,7 +41,7 @@ namespace Boulder_Dach_GUI
             int rowCount = lines.Length;
             int SizeOfLine = lines[0].Length;
             Failedload = false;
-
+            int portals = 0;
             for (int i = 0; i < rowCount; i++)
             {
                 char[] line = lines[i].ToCharArray();
@@ -60,8 +60,20 @@ namespace Boulder_Dach_GUI
                     {
                         GameField.maxpoint = GameField.maxpoint + 100;
                     }
+                    else if (Temp[k].Value == new RareDiamond().Value)
+                    {
+                        GameField.maxpoint = GameField.maxpoint + 500;
+                    }
+                    else if (Temp[k].Value == new Portal().Value)
+                    {
+                        portals++;
+                    }
                 }
                 Field.frame.Add(Temp);
+            }
+            if (portals > 2 && portals % 2 != 0)
+            {
+                Failedload = true;
             }
         }
 

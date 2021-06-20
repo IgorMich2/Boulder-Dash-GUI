@@ -120,11 +120,13 @@ namespace Boulder_Dach_GUI
         public static int BFSRadar(int y, int x)
         {
             BFSQuery.Clear();
-            
-            point = (y, x, 0);
-            int distance = BFSRadarStep(point);
 
-            return distance;
+            if (GameField.GameStatus) { 
+                point = (y, x, 0);
+                int distance = BFSRadarStep(point);
+                return distance;
+            }
+            return 0;
         }
 
         public static void Random2()
@@ -188,6 +190,17 @@ namespace Boulder_Dach_GUI
                         }
                     }
                 }
+                temp = randomNumber.Next() % 2;
+                if (temp == 0)
+                {
+                    for (int i=0; i<2; i++)
+                    {
+                        int y = randomNumber.Next() % 10 + 3;
+                        int x = randomNumber.Next() % 20 + 3;
+                        Field.frame[y][x] = new Portal();
+                    }
+                }
+
                 Field.frame[1][1] = new Hero();
                 BFSResult = DFS(1, 1);
             }
@@ -341,7 +354,16 @@ namespace Boulder_Dach_GUI
                         }
                     }
                 }
-
+                temp = randomNumber.Next() % 2;
+                if (temp == 0)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int y = randomNumber.Next() % 10 + 3;
+                        int x = randomNumber.Next() % 20 + 3;
+                        Field.frame[y][x] = new Portal();
+                    }
+                }
 
                 Field.frame[1][1] = new Hero();
                 BFSResult = DFS(1, 1);

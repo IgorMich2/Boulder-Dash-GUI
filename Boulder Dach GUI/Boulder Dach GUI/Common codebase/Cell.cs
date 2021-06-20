@@ -14,5 +14,9 @@ namespace Boulder_Dach_GUI
         {
             return "x";
         }
+
+        public virtual void Teleportation(int y, int x)
+        {
+        }
     }
 }

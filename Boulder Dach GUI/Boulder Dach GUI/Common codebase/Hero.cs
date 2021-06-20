@@ -13,7 +13,7 @@ namespace Boulder_Dach_GUI
         public static int digs=0;
         public static string value = "I";
         public static int RocksMoveByHero = 0;
-
+        public static int Teleportation = 0;
         public override string path()
         {
             return "hero.jpg";
@@ -106,8 +106,10 @@ namespace Boulder_Dach_GUI
             }
         }
 
-        public static void GoHero(int y, int x)
+    public static void GoHero(int y, int x)
         {
+            (int x, int y) prev = (Hero.x, Hero.y);
+
             if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && (Field.frame[y][x].CanEnter() == true))
             {
                 bool isdiamond = false;
@@ -138,6 +140,17 @@ namespace Boulder_Dach_GUI
                 {
                     GameField.AddScores(500);
                 }
+                if (2 * x - prev.x >= 0 && 2 * y - prev.y >= 0 && 2 * y - prev.y < Field.frame.Count && 2 * x - prev.x < Field.frame[0].Count && Field.frame[2 * y - prev.y][2 * x - prev.x].Value == new Portal().Value)
+                {
+                    FindHero();
+                    Thread.Sleep(110);
+                    Output.Emptycoordinates.x = Hero.x * 20;
+                    Output.Emptycoordinates.y = Hero.y * 20;
+                    Output.switcherempty = true;
+                    Thread.Sleep(110);
+                    Field.frame[2 * y - prev.y][2 * x - prev.x].Teleportation(2 * y - prev.y, 2 * x - prev.x);
+                    Teleportation++;
+                }
             }
             else if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && x + (x - Hero.x) > 0 && x + (x - Hero.x) < Field.frame[0].Count && Math.Abs(x - Hero.x) == 1 && Field.frame[y][x + (x - Hero.x)].Value == new Empty().Value && Field.frame[y][x].Value == new Rock().Value)
             {
@@ -158,10 +171,7 @@ namespace Boulder_Dach_GUI
                 RocksMoveByHero++;
             }
             steps++;
-            if (Field.frame[Hero.y - 1][Hero.x].Value == new Portal().Value || Field.frame[Hero.y][Hero.x - 1].Value == new Portal().Value || Field.frame[Hero.y + 1][Hero.x].Value == new Portal().Value || Field.frame[Hero.y][Hero.x + 1].Value == new Portal().Value)
-            {
-                Portal.Teleportation();
-            }
+            
         }
         public static void GoDig(int y, int x)
         {

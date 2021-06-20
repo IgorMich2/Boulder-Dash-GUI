@@ -33,7 +33,7 @@ namespace Boulder_Dach_GUI
             e = test;
         }
 
-        public static Label[] Last = new Label[8];
+        public static Label[] Last = new Label[9];
 
         public static void ArrayStart()
         {
@@ -367,6 +367,27 @@ namespace Boulder_Dach_GUI
                 Digs.BringToFront();
             }
             Digs.BringToFront();
+
+            Label Teleportates = new Label();
+            Teleportates.Location = new Point(100, 700);
+            Teleportates.Text = "Teleportates: ";
+            Teleportates.Size = new Size(500, 100);
+            Teleportates.BringToFront();
+            Last[8] = Teleportates;
+            if (Boulder.InvokeRequired)
+            {
+                Boulder.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    Boulder.Controls.Add(Teleportates);
+                    Teleportates.BringToFront();
+                });
+            }
+            else
+            {
+                Boulder.Controls.Add(Teleportates);
+                Teleportates.BringToFront();
+            }
+            Teleportates.BringToFront();
         }
 
         public static void GenereateInfo(Form Boulder)
@@ -412,6 +433,8 @@ namespace Boulder_Dach_GUI
                 Coordinates.BringToFront();
             }
             Coordinates.BringToFront();
+
+            
         }
 
         public static void InfoSteps(Form Boulder)
@@ -428,6 +451,7 @@ namespace Boulder_Dach_GUI
             Last[4].Text = "Steps to @: " + Convert.ToString(GenerationLevel.BFSRadar(Hero.y, Hero.x));
             Last[5].Text = "Time: " + Convert.ToString(DateTime.Now.Subtract(GameField.Time));
             Last[6].Text = "Digs: " + Convert.ToString(Hero.digs);
+            Last[8].Text = "Teleportates: " + Convert.ToString(Hero.Teleportation);
         }
 
         public static void GameClear(Form Boulder)
@@ -443,6 +467,7 @@ namespace Boulder_Dach_GUI
                     Boulder.Controls.Remove(Last[4]);
                     Boulder.Controls.Remove(Last[5]);
                     Boulder.Controls.Remove(Last[6]);
+                    Boulder.Controls.Remove(Last[8]);
                 });
             }
             else
@@ -453,6 +478,7 @@ namespace Boulder_Dach_GUI
                 Boulder.Controls.Remove(Last[4]);
                 Boulder.Controls.Remove(Last[5]);
                 Boulder.Controls.Remove(Last[6]);
+                Boulder.Controls.Remove(Last[8]);
             }
         }
 
