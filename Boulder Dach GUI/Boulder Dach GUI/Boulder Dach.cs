@@ -59,7 +59,6 @@ namespace Boulder_Dach_GUI
 
                 while (choose == -1)
                 {
-                    //Logic.BigSpace();
                     if (GameField.score == 100)
                     {
                         for (int k = 7; k < Field.frame.Count; k++)
@@ -178,12 +177,14 @@ namespace Boulder_Dach_GUI
                 if (openfile == false && GameField.TechnicalLevel == false && Levels.Failedload == false)
                 {
                     GameField.Time = DateTime.Now;
-                    Output.GameStart(Boulder);
+                    Output.GameStart1(Boulder);
+                    Output.GameStart2(Boulder);
                     Output.GenereateInfo(Boulder);
                     Output.Renderer(Boulder);
                     //LoadLevel();
 
                     Hero.FindHero();
+                    //Portal.FindPortals();
                     GameField.GameStatus = true;
                     while (true)
                     {
@@ -263,7 +264,7 @@ namespace Boulder_Dach_GUI
 
         private void BoulderForm_Load(object sender, EventArgs e)
         {
-            Form Temp = this;
+            
             
             Thread music = new Thread(Music.MusicFunction);
             music.Priority = ThreadPriority.Lowest;
@@ -271,21 +272,53 @@ namespace Boulder_Dach_GUI
             Thread lives = new Thread(Lives.LivesFunction);
             lives.Priority = ThreadPriority.Lowest;
 
-            Thread gravity = new Thread(()=>Gravity.GravityFunction(Temp));
+            Thread gravity = new Thread(Gravity.GravityFunction);
             gravity.Priority = ThreadPriority.Lowest;
 
-            Thread Info = new Thread(() => OnGame(Temp));
+            Thread Info = new Thread(() => OnGame(this));
             Info.Priority = ThreadPriority.Lowest;
             Info.Start();
+
+            Thread PrintingRocks = new Thread(() => Output.PrintingRocks(this));
+            PrintingRocks.Priority = ThreadPriority.Lowest;
+            PrintingRocks.Start();
+
+            Thread PrintingEmptyies = new Thread(() => Output.PrintingEmptyies(this));
+            PrintingEmptyies.Priority = ThreadPriority.Lowest;
+            PrintingEmptyies.Start();
+
+            Thread PrintingHero = new Thread(() => Output.PrintingHero(this));
+            PrintingHero.Priority = ThreadPriority.Lowest;
+            PrintingHero.Start();
+
+            Thread PrintingValue = new Thread(() => Output.PrintingValue(this));
+            PrintingValue.Priority = ThreadPriority.Lowest;
+            PrintingValue.Start();
+
+            Thread MoveEnemy = new Thread(Enemy.MoveEnemy);
+            MoveEnemy.Priority = ThreadPriority.Lowest;
+            MoveEnemy.Start();
+
+            Thread HelpTip = new Thread(Help.Update);
+            HelpTip.Priority = ThreadPriority.Lowest;
+            HelpTip.Start();
+
+            Thread PrintingEnemy = new Thread(() => Output.PrintingEnemy(this));
+            PrintingEnemy.Priority = ThreadPriority.Lowest;
+            PrintingEnemy.Start();
 
             Levels.GetArrayFromFile("menu.txt");
             //LoadLevel();
             Output.Renderer(this);
 
-            Thread GameFunctionThread = new Thread(()=>GameFunction(Temp));
+            Thread GameFunctionThread = new Thread(()=>GameFunction(this));
             GameFunctionThread.Priority = ThreadPriority.Lowest;
             GameFunctionThread.Start();
 
+            Thread UpdateField = new Thread(()=>Output.UpdateField(this));
+            UpdateField.Priority = ThreadPriority.Lowest;
+            UpdateField.Start();
+            
             music.Start();
             lives.Start();
             gravity.Start();
@@ -296,7 +329,8 @@ namespace Boulder_Dach_GUI
         {
             if (!LevelEditor.on)
             {
-                MovingHero.MoveHero(e, this);
+                string key = Convert.ToString(e.KeyData);
+                Hero.MoveHero(key);
                 Output.InfoSteps(this);
             }
             else
@@ -335,53 +369,6 @@ namespace Boulder_Dach_GUI
                         }
                 }
             }
-
-        }
-
-        //public void pictureBox1_Paint(object sender, PaintEventArgs e)
-        //{
-
-        //}
-
-        /*public void LoadLevel()
-        {
-            for (int x = 0; x < Field.frame.Count; x++)
-            {
-                for (int y = 0; y < Field.frame[0].Count; y++)
-                {
-                    PictureBox Test = new PictureBox();
-                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
-                    Test.Location = new Point(x * 20, y * 20);
-                    Test.Size = new Size(20, 20);
-                    Cell Printed = Levels.ToCell(Convert.ToString(Field.frame[x][y].Value));
-                    Test.Image = Image.FromFile(Printed.path());
-                    Test.BringToFront();
-                    Controls.Add(Test);
-                    Test.BringToFront();
-                    
-                }
-            }
-        }*/
-
-        public void UpdatePanel()
-        {
-
-        }
-
-        public void BoulderForm_Paint(object sender, PaintEventArgs e)
-        {
-            
-            /*Pen pen = new Pen(Color.Red);
-            e.Graphics.DrawLine(pen, new Point(0, 0), new Point(200, 200));
-            Logic.Set(e.Graphics);
-            //Drawing();
-            //Draw();
-
-            e.Graphics.DrawLine(new Pen(Color.Red), new Point(0, 0), new Point(300, 300));*/
-        }
-
-        private void panel_Paint(object sender, PaintEventArgs e)
-        {
 
         }
 

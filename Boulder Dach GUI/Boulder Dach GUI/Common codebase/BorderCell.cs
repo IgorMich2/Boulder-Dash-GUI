@@ -13,7 +13,7 @@ namespace Boulder_Dach_GUI
             return false;
         }
 
-        public override string path()
+        public override string Path()
         {
             return "wall.jpg";
         }

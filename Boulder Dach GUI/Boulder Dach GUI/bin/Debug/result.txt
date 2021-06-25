@@ -1,10 +1,10 @@
-Name: Igor
+Name: 
+Score: 3500
+Steps: 142
+Digs: 1
+Lives at the end: 480
+Time: 00:00:51.3172831
+Rock down by gravity: 17
+Rock moved by hero: 3
 Result: Win
-Score: 3400
-Steps: 150
-Digs: 0
-Lives at the end: 490
-Time: 00:00:43.0971663
-Rock down by gravity: 28
-Rock moved by hero: 1
-Result: Win
+Teleportations: 0

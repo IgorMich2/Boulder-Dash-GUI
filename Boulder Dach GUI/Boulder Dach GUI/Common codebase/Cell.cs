@@ -10,9 +10,10 @@ namespace Boulder_Dach_GUI
             return false;
         }
         public virtual void OnEnter() { }
-        public virtual string path()
+        public virtual string Path()
         {
             return "x";
         }
+
     }
 }
