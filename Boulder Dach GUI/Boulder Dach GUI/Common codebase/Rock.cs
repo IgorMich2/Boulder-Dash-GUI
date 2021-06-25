@@ -6,7 +6,7 @@ namespace Boulder_Dach_GUI
     {
         public override char Value { get => 'o';  }
         public static int RocksDownGravity = 0;
-        public override string path()
+        public override string Path()
         {
             return "rock.jpg";
         }

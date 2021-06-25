@@ -59,7 +59,6 @@ namespace Boulder_Dach_GUI
 
                 while (choose == -1)
                 {
-                    //Logic.BigSpace();
                     if (GameField.score == 100)
                     {
                         for (int k = 7; k < Field.frame.Count; k++)
@@ -178,13 +177,14 @@ namespace Boulder_Dach_GUI
                 if (openfile == false && GameField.TechnicalLevel == false && Levels.Failedload == false)
                 {
                     GameField.Time = DateTime.Now;
-                    Output.GameStart(Boulder);
+                    Output.GameStart1(Boulder);
+                    Output.GameStart2(Boulder);
                     Output.GenereateInfo(Boulder);
                     Output.Renderer(Boulder);
                     //LoadLevel();
 
                     Hero.FindHero();
-                    Portal.FindPortals();
+                    //Portal.FindPortals();
                     GameField.GameStatus = true;
                     while (true)
                     {
@@ -264,7 +264,7 @@ namespace Boulder_Dach_GUI
 
         private void BoulderForm_Load(object sender, EventArgs e)
         {
-            Form Temp = this;
+            
             
             Thread music = new Thread(Music.MusicFunction);
             music.Priority = ThreadPriority.Lowest;
@@ -275,35 +275,47 @@ namespace Boulder_Dach_GUI
             Thread gravity = new Thread(Gravity.GravityFunction);
             gravity.Priority = ThreadPriority.Lowest;
 
-            Thread Info = new Thread(() => OnGame(Temp));
+            Thread Info = new Thread(() => OnGame(this));
             Info.Priority = ThreadPriority.Lowest;
             Info.Start();
 
-            Thread PrintingRocks = new Thread(() => Output.PrintingRocks(Temp));
+            Thread PrintingRocks = new Thread(() => Output.PrintingRocks(this));
             PrintingRocks.Priority = ThreadPriority.Lowest;
             PrintingRocks.Start();
 
-            Thread PrintingEmptyies = new Thread(() => Output.PrintingEmptyies(Temp));
+            Thread PrintingEmptyies = new Thread(() => Output.PrintingEmptyies(this));
             PrintingEmptyies.Priority = ThreadPriority.Lowest;
             PrintingEmptyies.Start();
 
-            Thread PrintingHero = new Thread(() => Output.PrintingHero(Temp));
+            Thread PrintingHero = new Thread(() => Output.PrintingHero(this));
             PrintingHero.Priority = ThreadPriority.Lowest;
             PrintingHero.Start();
 
-            Thread PrintingValue = new Thread(() => Output.PrintingValue(Temp));
+            Thread PrintingValue = new Thread(() => Output.PrintingValue(this));
             PrintingValue.Priority = ThreadPriority.Lowest;
             PrintingValue.Start();
+
+            Thread MoveEnemy = new Thread(Enemy.MoveEnemy);
+            MoveEnemy.Priority = ThreadPriority.Lowest;
+            MoveEnemy.Start();
+
+            Thread HelpTip = new Thread(Help.Update);
+            HelpTip.Priority = ThreadPriority.Lowest;
+            HelpTip.Start();
+
+            Thread PrintingEnemy = new Thread(() => Output.PrintingEnemy(this));
+            PrintingEnemy.Priority = ThreadPriority.Lowest;
+            PrintingEnemy.Start();
 
             Levels.GetArrayFromFile("menu.txt");
             //LoadLevel();
             Output.Renderer(this);
 
-            Thread GameFunctionThread = new Thread(()=>GameFunction(Temp));
+            Thread GameFunctionThread = new Thread(()=>GameFunction(this));
             GameFunctionThread.Priority = ThreadPriority.Lowest;
             GameFunctionThread.Start();
 
-            Thread UpdateField = new Thread(()=>Output.UpdateField(Temp));
+            Thread UpdateField = new Thread(()=>Output.UpdateField(this));
             UpdateField.Priority = ThreadPriority.Lowest;
             UpdateField.Start();
             

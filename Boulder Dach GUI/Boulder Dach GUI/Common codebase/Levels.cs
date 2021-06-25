@@ -26,6 +26,8 @@ namespace Boulder_Dach_GUI
                     return new Hero();
                 case "o":
                     return new Rock();
+                case "=":
+                    return new Enemy();
                 case "-":
                     return new BorderCell(Convert.ToChar(symbol));
                 case "|":

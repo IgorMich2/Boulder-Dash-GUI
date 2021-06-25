@@ -17,7 +17,7 @@ namespace Boulder_Dach_GUI
 
         public static List<List<bool>> Visited = new List<List<bool>>();
 
-        static List<(int y , int x , int distance)> BFSQuery = new List<(int y, int x , int distance)>();
+        static List<(int y, int x, int distance)> BFSQuery = new List<(int y, int x, int distance)>();
 
         public static void DFSStep(int i1, int i2)
         {
@@ -103,7 +103,7 @@ namespace Boulder_Dach_GUI
                     return (BFSQuery[0].distance);
                 }
 
-                if (BFSQuery[0].y > 0 && BFSQuery[0].x > 0) 
+                if (BFSQuery[0].y > 0 && BFSQuery[0].x > 0)
                 {
                     AddToQuery(1, 0);
                     AddToQuery(0, 1);
@@ -121,7 +121,8 @@ namespace Boulder_Dach_GUI
         {
             BFSQuery.Clear();
 
-            if (GameField.GameStatus) { 
+            if (GameField.GameStatus)
+            {
                 point = (y, x, 0);
                 int distance = BFSRadarStep(point);
                 return distance;
@@ -190,15 +191,23 @@ namespace Boulder_Dach_GUI
                         }
                     }
                 }
-                temp = randomNumber.Next() % 2;
-                if (temp == 0)
+                int probability = randomNumber.Next() % 2;
+                if (probability == 0)
                 {
-                    for (int i=0; i<2; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         int y = randomNumber.Next() % 10 + 3;
                         int x = randomNumber.Next() % 20 + 3;
                         Field.frame[y][x] = new Portal();
                     }
+                }
+
+                probability = randomNumber.Next() % 2;
+                if (probability == 0)
+                {
+                       int y = randomNumber.Next() % 10 + 3;
+                       int x = randomNumber.Next() % 20 + 3;
+                       Field.frame[y][x] = new Enemy();
                 }
 
                 Field.frame[1][1] = new Hero();
@@ -210,7 +219,7 @@ namespace Boulder_Dach_GUI
 
         public static void Intellectual()
         {
-            int temp, bs = 0, bd = 0, br = 0;
+            int probability, bs = 0, bd = 0, br = 0;
             char prev = new Sand().Value;
             do
             {
@@ -224,7 +233,7 @@ namespace Boulder_Dach_GUI
                 {
                     for (int x = 1; x < Field.frame[i].Count - 1; x++)
                     {
-                        temp = randomNumber.Next() % 100;
+                        probability = randomNumber.Next() % 100;
                         if (prev == new Sand().Value)
                         {
                             bs = 10;
@@ -243,14 +252,14 @@ namespace Boulder_Dach_GUI
                             bd = 0;
                             br = 10;
                         }
-                        if (temp < (70 + bs - bd - br))
+                        if (probability < (70 + bs - bd - br))
                         {
                             Field.frame[i][x] = new Sand();
                             prev = new Sand().Value;
                         }
-                        else if (temp < 80 + bs + bd - br)
+                        else if (probability < 80 + bs + bd - br)
                         {
-                            if (temp % 9 == 0)
+                            if (probability % 9 == 0)
                             {
                                 Field.frame[i][x] = new RareDiamond();
                                 GameField.maxpoint += 500;
@@ -262,7 +271,7 @@ namespace Boulder_Dach_GUI
                             }
                             prev = new Diamond().Value;
                         }
-                        else if (temp < 100 + bs + bd + br)
+                        else if (probability < 100 + bs + bd + br)
                         {
                             Field.frame[i][x] = new Rock();
                             prev = new Rock().Value;
@@ -281,7 +290,7 @@ namespace Boulder_Dach_GUI
                     }
                     for (int x = 1; x < Field.frame[0].Count - 1; x++)
                     {
-                        temp = randomNumber.Next() % 100;
+                        probability = randomNumber.Next() % 100;
                         prev = new Rock().Value;
                         if (prev == new Sand().Value)
                         {
@@ -293,7 +302,7 @@ namespace Boulder_Dach_GUI
                             bs = 0;
                             br = 10;
                         }
-                        if (temp < 70 + br - bs)
+                        if (probability < 70 + br - bs)
                         {
                             if (Field.frame[num][x].Value == new Diamond().Value)
                             {
@@ -322,7 +331,7 @@ namespace Boulder_Dach_GUI
                     }
                     for (int x = 1; x < Field.frame.Count - 1; x++)
                     {
-                        temp = randomNumber.Next() % 100;
+                        probability = randomNumber.Next() % 100;
                         prev = new Rock().Value;
                         if (prev == new Sand().Value)
                         {
@@ -334,7 +343,7 @@ namespace Boulder_Dach_GUI
                             bs = 0;
                             br = 10;
                         }
-                        if (temp < 70 + br - bs)
+                        if (probability < 70 + br - bs)
                         {
                             if (Field.frame[x][num].Value == new Diamond().Value)
                             {
@@ -354,8 +363,8 @@ namespace Boulder_Dach_GUI
                         }
                     }
                 }
-                temp = randomNumber.Next() % 2;
-                if (temp == 0)
+                probability = randomNumber.Next() % 2;
+                if (probability == 0)
                 {
                     for (int i = 0; i < 2; i++)
                     {
@@ -363,6 +372,14 @@ namespace Boulder_Dach_GUI
                         int x = randomNumber.Next() % 20 + 3;
                         Field.frame[y][x] = new Portal();
                     }
+                }
+
+                probability = randomNumber.Next() % 2;
+                if (probability == 0)
+                {
+                    int y = randomNumber.Next() % 10 + 3;
+                    int x = randomNumber.Next() % 20 + 3;
+                    Field.frame[y][x] = new Enemy();
                 }
 
                 Field.frame[1][1] = new Hero();

@@ -8,8 +8,8 @@ namespace Boulder_Dach_GUI
 {
     class Portal:Cell
     {
-        public static (int x, int y) coordinatesthis;
-        public static (int x, int y) coordinatesnew;
+        public (int x, int y) coordinatesthis;
+        public (int x, int y) coordinatesnew;
         public static bool Isteleportes = false;
         public override char Value { get => '&'; }
         public override bool CanEnter()
@@ -17,12 +17,12 @@ namespace Boulder_Dach_GUI
             return false;
         }
 
-        public override string path()
+        public override string Path()
         {
             return "portal.jpg";
         }
 
-        public override void Teleportation(int y, int x)
+        public void Teleportation(int y, int x)
         {
             //if (!Isteleportes) {
                 coordinatesthis = (x, y);
@@ -41,7 +41,7 @@ namespace Boulder_Dach_GUI
             //}
         }
 
-        public static void FindPortals()
+        public void FindPortals()
         {
             for (int i = 0; i < Field.frame.Count; i++)
             {

@@ -129,7 +129,7 @@ namespace Boulder_Dach_GUI
 
             using (StreamWriter sw = new StreamWriter(writePath))
             {
-                sw.WriteLine("Name: " + name);        
+                sw.WriteLine("Name: " + name);
                 sw.WriteLine("Score: " + GameField.score);
                 sw.WriteLine("Steps: " + Hero.steps);
                 sw.WriteLine("Digs: " + Hero.digs);
@@ -144,27 +144,16 @@ namespace Boulder_Dach_GUI
             GameField.score = GameField.maxpoint;
             Process.Start(new ProcessStartInfo(@"result.txt") { UseShellExecute = true });
 
-            //try
+            using (SqlConnection connection = new SqlConnection(ConnStr))
+            using (var cmd1 = new SqlDataAdapter())
             {
-                using (SqlConnection connection = new SqlConnection(ConnStr))
-                using (var cmd1 = new SqlDataAdapter())
-                {
-                    connection.Open();
-                    System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand();
-                    cmd.Connection = connection;
-                    //cmd.CommandText = "INSERT INTO Players (Name, Score, Steps, Digs, Livesend) VALUES ('" + name+"', "+score+", "+Hero.steps+ ", " + Hero.digs + ", " + Hero.lives + ")";
-                    //cmd.CommandText = "INSERT INTO Players (Name, Score) VALUES ('" + name + "', " + score + ")";
-                    string time = Convert.ToString(DateTime.Now - GameField.Time);
-                    cmd.CommandText = "INSERT INTO Players (Name, Score, Steps, Digs, Livesend, Time, RockDown, RockMoveByHero, Result, Teleportation) VALUES ('" + name + "', " + GameField.score + ", " + Hero.steps + ", " + Hero.digs + ", " + Hero.lives + ",'" + time + "'" + ", " + Rock.RocksDownGravity + ", " + Hero.RocksMoveByHero + ", " + "'" + result + "', " + Hero.Teleportation + ")";
-                    cmd.ExecuteNonQuery();
-                }
-
+                connection.Open();
+                System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand();
+                cmd.Connection = connection;
+                string time = Convert.ToString(DateTime.Now - GameField.Time);
+                cmd.CommandText = "INSERT INTO Players (Name, Score, Steps, Digs, Livesend, Time, RockDown, RockMoveByHero, Result, Teleportation) VALUES ('" + name + "', " + GameField.score + ", " + Hero.steps + ", " + Hero.digs + ", " + Hero.lives + ",'" + time + "'" + ", " + Rock.RocksDownGravity + ", " + Hero.RocksMoveByHero + ", " + "'" + result + "', " + Hero.Teleportation + ")";
+                cmd.ExecuteNonQuery();
             }
-            //catch (SqlException ex)
-            {
-              //  Output.Exception(ex);
-            }
-
         }
     }
 }

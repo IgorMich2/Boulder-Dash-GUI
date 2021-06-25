@@ -14,7 +14,7 @@ namespace Boulder_Dach_GUI
             GameField.AddScores(100);
         }
 
-        public override string path()
+        public override string Path()
         {
             return "diamond.jpg";
         }

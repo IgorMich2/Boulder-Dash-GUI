@@ -106,6 +106,7 @@
     <Compile Include="Common codebase\Database.cs" />
     <Compile Include="Common codebase\Diamond.cs" />
     <Compile Include="Common codebase\Empty.cs" />
+    <Compile Include="Common codebase\Enemy.cs" />
     <Compile Include="Common codebase\Field.cs" />
     <Compile Include="Common codebase\GameField.cs" />
     <Compile Include="Common codebase\GenerationLevel.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Common codebase\Hero.cs" />
     <Compile Include="Common codebase\Levels.cs" />
     <Compile Include="Common codebase\Lives.cs" />
+    <Compile Include="Common codebase\Help.cs" />
     <Compile Include="LevelEditor.cs" />
     <Compile Include="Output.cs" />
     <Compile Include="Common codebase\Music.cs" />

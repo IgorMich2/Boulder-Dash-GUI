@@ -14,7 +14,7 @@ namespace Boulder_Dach_GUI
         public static string value = "I";
         public static int RocksMoveByHero = 0;
         public static int Teleportation = 0;
-        public override string path()
+        public override string Path()
         {
             return "hero.jpg";
         }
@@ -140,7 +140,7 @@ namespace Boulder_Dach_GUI
                 {
                     GameField.AddScores(500);
                 }
-                if (2 * x - prev.x >= 0 && 2 * y - prev.y >= 0 && 2 * y - prev.y < Field.frame.Count && 2 * x - prev.x < Field.frame[0].Count && Field.frame[2 * y - prev.y][2 * x - prev.x].Value == new Portal().Value)
+                if (2 * x - prev.x >= 0 && 2 * y - prev.y >= 0 && 2 * y - prev.y < Field.frame.Count && 2 * x - prev.x < Field.frame[0].Count && Field.frame[2 * y - prev.y][2 * x - prev.x] is Portal portal)
                 {
                     FindHero();
                     Thread.Sleep(110);
@@ -148,30 +148,31 @@ namespace Boulder_Dach_GUI
                     Output.Emptycoordinates.y = Hero.y * 20;
                     Output.switcherempty = true;
                     Thread.Sleep(110);
-                    Field.frame[2 * y - prev.y][2 * x - prev.x].Teleportation(2 * y - prev.y, 2 * x - prev.x);
+                    portal.Teleportation(2 * y - prev.y, 2 * x - prev.x);
                     Teleportation++;
                 }
             }
             else if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && x + (x - Hero.x) > 0 && x + (x - Hero.x) < Field.frame[0].Count && Math.Abs(x - Hero.x) == 1 && Field.frame[y][x + (x - Hero.x)].Value == new Empty().Value && Field.frame[y][x].Value == new Rock().Value)
             {
-                Field.frame[y][Hero.x] = new Empty();
-                Field.frame[y][x] = new Hero();
-                Field.frame[y][x + (x - Hero.x)] = new Rock();
-                Output.Emptycoordinates.x = Hero.x * 20;
-                Output.Emptycoordinates.y = Hero.y * 20;
-                Output.switcherempty = true;
-                Output.Herocoordinates.x = x * 20;
-                Output.Herocoordinates.y = y * 20;
-                Output.switcherhero = true;
-                Output.Rockcoordinates.x = (x + (x - Hero.x)) * 20;
-                Output.Rockcoordinates.y = y * 20;
-                Output.switcherrocks = true;
-                Hero.x = x;
-                Hero.y = y;
-                RocksMoveByHero++;
+                lock (Output.locker) {
+                    Field.frame[y][Hero.x] = new Empty();
+                    Field.frame[y][x] = new Hero();
+                    Field.frame[y][x + (x - Hero.x)] = new Rock();
+                    Output.Emptycoordinates.x = Hero.x * 20;
+                    Output.Emptycoordinates.y = Hero.y * 20;
+                    Output.switcherempty = true;
+                    Output.Herocoordinates.x = x * 20;
+                    Output.Herocoordinates.y = y * 20;
+                    Output.switcherhero = true;
+                    Output.Rockcoordinates.x = (x + (x - Hero.x)) * 20;
+                    Output.Rockcoordinates.y = y * 20;
+                    Output.switcherrocks = true;
+                    Hero.x = x;
+                    Hero.y = y;
+                    RocksMoveByHero++;
+                }
             }
-            steps++;
-            
+            steps++;   
         }
         public static void GoDig(int y, int x)
         {

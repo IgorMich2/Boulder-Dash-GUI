@@ -9,20 +9,15 @@ namespace Boulder_Dach_GUI
     class RareDiamond : Diamond
     {
         public override char Value { get => '$'; }
-        public override bool CanEnter()
-        {
-            return true;
-        }
+
         public override void OnEnter()
         {
             GameField.AddScores(500);
         }
 
-        public override string path()
+        public override string Path()
         {
             return "rarediamond.jpg";
         }
-
-
     }
 }

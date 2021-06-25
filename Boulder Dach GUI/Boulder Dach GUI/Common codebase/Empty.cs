@@ -11,7 +11,7 @@ namespace Boulder_Dach_GUI
             return true;
         }
 
-        public override string path()
+        public override string Path()
         {
             return "empty.jpg";
         }
