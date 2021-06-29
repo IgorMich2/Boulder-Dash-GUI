@@ -32,6 +32,8 @@ namespace Boulder_Dach_GUI
         public static string valuefile;
         public static Cell value;
         public static Label[] Last = new Label[12];
+        public static PictureBox Enemy = new PictureBox();
+        
 
         public static void ArrayStart()
         {
@@ -200,26 +202,32 @@ namespace Boulder_Dach_GUI
             {
                 if (switcherenemy)
                 {
-                    PictureBox Test = new PictureBox();
-                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
-                    Test.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
-                    Test.Size = new Size(20, 20);
-                    Test.Image = Image.FromFile("enemy.jpg");
-                    Test.BringToFront();
-
                     if (Boulder.InvokeRequired)
                     {
                         Boulder.BeginInvoke((MethodInvoker)delegate ()
                         {
-                            Boulder.Controls.Add(Test);
-                            Test.BringToFront();
+                            Boulder.Controls.Remove(Enemy);
+                            Enemy.SizeMode = PictureBoxSizeMode.StretchImage;
+                            Enemy.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
+                            Enemy.Size = new Size(20, 20);
+                            Enemy.Image = Image.FromFile("enemy.jpg");
+                            Enemy.BringToFront();
+                            Boulder.Controls.Add(Enemy);
+                            Enemy.BringToFront();
                         });
                     }
                     else
                     {
-                        Boulder.Controls.Add(Test);
-                        Test.BringToFront();
+                        Boulder.Controls.Remove(Enemy);
+                        Enemy.SizeMode = PictureBoxSizeMode.StretchImage;
+                        Enemy.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
+                        Enemy.Size = new Size(20, 20);
+                        Enemy.Image = Image.FromFile("enemy.jpg");
+                        Enemy.BringToFront();
+                        Boulder.Controls.Add(Enemy);
+                        Enemy.BringToFront();
                     }
+
                     switchervalue = false;
                 }
                 Thread.Sleep(200);
@@ -285,6 +293,28 @@ namespace Boulder_Dach_GUI
 
         public static void GameStart1(Form Boulder)
         {
+            Enemy.SizeMode = PictureBoxSizeMode.StretchImage;
+            Enemy.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
+            Enemy.Size = new Size(0, 0);
+            Enemy.Image = Image.FromFile("enemy.jpg");
+            Enemy.BringToFront();
+
+            if (Boulder.InvokeRequired)
+            {
+                Boulder.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    Boulder.Controls.Add(Enemy);
+                    Enemy.BringToFront();
+                });
+            }
+            else
+            {
+                Boulder.Controls.Add(Enemy);
+                Enemy.BringToFront();
+            }
+            switchervalue = false;
+
+
             Label Time = new Label();
             Time.Location = new Point(100, 600);
             Time.Text = "Time: ";
