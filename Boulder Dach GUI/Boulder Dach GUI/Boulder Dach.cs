@@ -306,6 +306,14 @@ namespace Boulder_Dach_GUI
             PrintingValue.Priority = ThreadPriority.Lowest;
             PrintingValue.Start();
 
+            Thread PrintingEnemy = new Thread(() => Output.PrintingEnemy(this));
+            PrintingEnemy.Priority = ThreadPriority.Lowest;
+            PrintingEnemy.Start();
+
+            /*Thread Printing = new Thread(() => Output.Printing(this));
+            Printing.Priority = ThreadPriority.Lowest;
+            Printing.Start();*/
+
             Thread MoveEnemy = new Thread(Enemy.MoveEnemy);
             MoveEnemy.Priority = ThreadPriority.Lowest;
             MoveEnemy.Start();
@@ -314,9 +322,7 @@ namespace Boulder_Dach_GUI
             HelpTip.Priority = ThreadPriority.Lowest;
             HelpTip.Start();
 
-            Thread PrintingEnemy = new Thread(() => Output.PrintingEnemy(this));
-            PrintingEnemy.Priority = ThreadPriority.Lowest;
-            PrintingEnemy.Start();
+            
 
             Levels.GetArrayFromFile("menu.txt");
             //LoadLevel();

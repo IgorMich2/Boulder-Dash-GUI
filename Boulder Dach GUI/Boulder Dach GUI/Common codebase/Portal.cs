@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Boulder_Dach_GUI
 {
-    class Portal:Cell
+    class Portal : Cell
     {
         public (int x, int y) coordinatesthis;
         public (int x, int y) coordinatesnew;
@@ -24,21 +24,18 @@ namespace Boulder_Dach_GUI
 
         public void Teleportation(int y, int x)
         {
-            //if (!Isteleportes) {
-                coordinatesthis = (x, y);
-                FindPortals();
-                for (int i = coordinatesnew.x + 1; i >= coordinatesnew.x - 1; i--)
+            coordinatesthis = (x, y);
+            FindPortals();
+            for (int i = coordinatesnew.x + 1; i >= coordinatesnew.x - 1; i--)
+            {
+                for (int j = coordinatesnew.y; j <= coordinatesnew.y + 1; j++)
                 {
-                    for (int j = coordinatesnew.y; j <= coordinatesnew.y + 1; j++)
+                    if (Field.frame[j][i].CanEnter())
                     {
-                        if (Field.frame[j][i].CanEnter())
-                        {
-                            Hero.GoHero(j, i);
-                        }
+                        Hero.GoHero(j, i);
                     }
                 }
-                //Isteleportes = true;
-            //}
+            }
         }
 
         public void FindPortals()
