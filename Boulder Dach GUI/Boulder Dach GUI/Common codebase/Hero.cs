@@ -9,8 +9,8 @@ namespace Boulder_Dach_GUI
         public static int lives = 500;
         public static int x;
         public static int y;
-        public static int steps=0;
-        public static int digs=0;
+        public static int steps = 0;
+        public static int digs = 0;
         public static string value = "I";
         public static int RocksMoveByHero = 0;
         public static int Teleportation = 0;
@@ -44,6 +44,7 @@ namespace Boulder_Dach_GUI
 
         public static void MoveHero(string keyInfo)
         {
+
             if ("W" == keyInfo || "Up" == keyInfo)
             {
                 Hero.GoHero(Hero.y - 1, Hero.x);
@@ -104,9 +105,10 @@ namespace Boulder_Dach_GUI
             {
                 Output.switchupdate = true;
             }
+
         }
 
-    public static void GoHero(int y, int x)
+        public static void GoHero(int y, int x)
         {
             (int x, int y) prev = (Hero.x, Hero.y);
 
@@ -154,7 +156,8 @@ namespace Boulder_Dach_GUI
             }
             else if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && x + (x - Hero.x) > 0 && x + (x - Hero.x) < Field.frame[0].Count && Math.Abs(x - Hero.x) == 1 && Field.frame[y][x + (x - Hero.x)].Value == new Empty().Value && Field.frame[y][x].Value == new Rock().Value)
             {
-                lock (Output.locker) {
+                lock (Output.locker)
+                {
                     Field.frame[y][Hero.x] = new Empty();
                     Field.frame[y][x] = new Hero();
                     Field.frame[y][x + (x - Hero.x)] = new Rock();
@@ -172,7 +175,7 @@ namespace Boulder_Dach_GUI
                     RocksMoveByHero++;
                 }
             }
-            steps++;   
+            steps++;
         }
         public static void GoDig(int y, int x)
         {

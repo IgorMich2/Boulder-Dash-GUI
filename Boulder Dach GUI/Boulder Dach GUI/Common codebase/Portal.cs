@@ -29,7 +29,7 @@ namespace Boulder_Dach_GUI
                 FindPortals();
                 for (int i = coordinatesnew.x + 1; i >= coordinatesnew.x - 1; i--)
                 {
-                    for (int j = coordinatesnew.y - 1; j <= coordinatesnew.y + 1; j++)
+                    for (int j = coordinatesnew.y; j <= coordinatesnew.y + 1; j++)
                     {
                         if (Field.frame[j][i].CanEnter())
                         {

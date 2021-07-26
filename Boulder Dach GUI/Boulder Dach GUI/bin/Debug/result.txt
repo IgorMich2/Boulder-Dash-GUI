@@ -1,10 +1,10 @@
-Name: 
-Score: 3500
-Steps: 142
-Digs: 1
-Lives at the end: 480
-Time: 00:00:51.3172831
-Rock down by gravity: 17
-Rock moved by hero: 3
+Name: Игорь
+Score: 3400
+Steps: 18
+Digs: 0
+Lives at the end: 500
+Time: 00:00:56.2731692
+Rock down by gravity: 0
+Rock moved by hero: 0
 Result: Win
 Teleportations: 0

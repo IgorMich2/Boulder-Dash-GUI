@@ -177,8 +177,7 @@ namespace Boulder_Dach_GUI
                 if (openfile == false && GameField.TechnicalLevel == false && Levels.Failedload == false)
                 {
                     GameField.Time = DateTime.Now;
-                    Output.GameStart1(Boulder);
-                    Output.GameStart2(Boulder);
+                    Output.GameStart(Boulder);
                     Output.GenereateInfo(Boulder);
                     Output.Renderer(Boulder);
                     //LoadLevel();
@@ -204,6 +203,18 @@ namespace Boulder_Dach_GUI
                     {
                         Database.EndLevel("Defeat");
                     }
+                    /*if (Boulder.InvokeRequired)
+                    {
+                        Boulder.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            
+                            Boulder.Controls.Remove(Enemy);
+                        });
+                    }
+                    else
+                    {
+                        Boulder.Controls.Remove(Enemy);
+                    }*/
                 }
                 else if (GameField.TechnicalLevel == true && choose != 13)
                 {
@@ -332,6 +343,7 @@ namespace Boulder_Dach_GUI
                 string key = Convert.ToString(e.KeyData);
                 Hero.MoveHero(key);
                 Output.InfoSteps(this);
+                Thread.Sleep(200);
             }
             else
             {
