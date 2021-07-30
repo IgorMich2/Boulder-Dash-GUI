@@ -9,6 +9,8 @@ namespace Boulder_Dach_GUI
     {
         public static List<List<Cell>> frame = new List<List<Cell>>();
 
+        public static List<(int, int)> PortalCoordinates = new List<(int, int)>();
+
         static public SoundPlayer player = new SoundPlayer();
     }
 }

@@ -273,6 +273,10 @@ namespace Boulder_Dach_GUI
             {
                 for (int j = 0; j < Field.frame[0].Count; j++)
                 {
+                    if (Field.frame[i][j] is Portal)
+                    {
+                        Field.PortalCoordinates.Add((j, i));
+                    }
                     Output.PrintCell(j, i, Field.frame[i][j], Boulder);
                 }
             }
@@ -391,6 +395,7 @@ namespace Boulder_Dach_GUI
                     Boulder.Controls.Remove(Last[i]);
                 }
             }
+            Field.PortalCoordinates.Clear();
         }
 
 
