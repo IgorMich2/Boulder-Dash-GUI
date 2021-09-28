@@ -119,6 +119,7 @@ namespace Boulder_Dach_GUI
 
         public static void EndLevel(string result)
         {
+            Output.switcherenemy = false;
             Output.Clear();
             Field.frame.Clear();
             Levels.GetArrayFromFile("empty.txt");

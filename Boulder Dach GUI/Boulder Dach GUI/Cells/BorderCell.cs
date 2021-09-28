@@ -8,15 +8,16 @@ namespace Boulder_Dach_GUI
 {
     class BorderCell : Cell
     {
-        public override bool CanEnter()
+        /*public override bool CanEnter()
         {
             return false;
-        }
+        }*/
 
         public override string Path()
         {
             return "wall.jpg";
         }
+
         public BorderCell(char value)
         {
             this.Value = value;

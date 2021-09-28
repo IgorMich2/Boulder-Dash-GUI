@@ -18,6 +18,7 @@ namespace Boulder_Dach_GUI
         public static bool switcherrocks = false;
         public static bool switcherempty = false;
         public static bool switcherenemy = false;
+        public static bool switcherisenemy = false;
         public static bool switcherhero = false;
         public static bool switchervalue = false;
         public static bool switchupdate = false;
@@ -29,13 +30,37 @@ namespace Boulder_Dach_GUI
         public static (int x, int y) Herocoordinates;
         public static (int x, int y) Valuecoordinates;
         public static (int x, int y) Enemycoordinates;
-        public static string valuefile;
         public static Cell value;
         public static Label[] Last = new Label[12];
-
+        public static PictureBox Enemy = new PictureBox();
+        
         public static void ArrayStart()
         {
 
+        }
+
+        public static void PrintCell2(int x, int y, Cell Printed, Form Boulder)
+        {
+            PictureBox PrintedCell = new PictureBox();
+            PrintedCell.SizeMode = PictureBoxSizeMode.StretchImage;
+            PrintedCell.Location = new Point(x * 20, y * 20);
+            PrintedCell.Size = new Size(20, 20);
+            PrintedCell.Image = Image.FromFile(Printed.Path());
+            PrintedCell.BringToFront();
+
+            if (Boulder.InvokeRequired)
+            {
+                Boulder.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    Boulder.Controls.Add(PrintedCell);
+                    PrintedCell.BringToFront();
+                });
+            }
+            else
+            {
+                Boulder.Controls.Add(PrintedCell);
+                PrintedCell.BringToFront();
+            }
         }
 
         public static void PrintCell(int x, int y, Cell Printed, Form Boulder)
@@ -200,25 +225,30 @@ namespace Boulder_Dach_GUI
             {
                 if (switcherenemy)
                 {
-                    PictureBox Test = new PictureBox();
-                    Test.SizeMode = PictureBoxSizeMode.StretchImage;
-                    Test.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
-                    Test.Size = new Size(20, 20);
-                    Test.Image = Image.FromFile("enemy.jpg");
-                    Test.BringToFront();
-
                     if (Boulder.InvokeRequired)
                     {
                         Boulder.BeginInvoke((MethodInvoker)delegate ()
                         {
-                            Boulder.Controls.Add(Test);
-                            Test.BringToFront();
+                            Boulder.Controls.Remove(Enemy);
+                            Enemy.SizeMode = PictureBoxSizeMode.StretchImage;
+                            Enemy.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
+                            Enemy.Size = new Size(20, 20);
+                            Enemy.Image = Image.FromFile("enemy.jpg");
+                            Enemy.BringToFront();
+                            Boulder.Controls.Add(Enemy);
+                            Enemy.BringToFront();
                         });
                     }
                     else
                     {
-                        Boulder.Controls.Add(Test);
-                        Test.BringToFront();
+                        Boulder.Controls.Remove(Enemy);
+                        Enemy.SizeMode = PictureBoxSizeMode.StretchImage;
+                        Enemy.Location = new Point(Enemycoordinates.x, Enemycoordinates.y);
+                        Enemy.Size = new Size(20, 20);
+                        Enemy.Image = Image.FromFile("enemy.jpg");
+                        Enemy.BringToFront();
+                        Boulder.Controls.Add(Enemy);
+                        Enemy.BringToFront();
                     }
                     switchervalue = false;
                 }
@@ -243,6 +273,10 @@ namespace Boulder_Dach_GUI
             {
                 for (int j = 0; j < Field.frame[0].Count; j++)
                 {
+                    if (Field.frame[i][j] is Portal)
+                    {
+                        Field.PortalCoordinates.Add((j, i));
+                    }
                     Output.PrintCell(j, i, Field.frame[i][j], Boulder);
                 }
             }
@@ -283,405 +317,44 @@ namespace Boulder_Dach_GUI
 
         }
 
-        public static void GameStart1(Form Boulder)
+        public static void ToForm(Form Boulder, string Text, Point Location, int Index)
         {
-            Label Time = new Label();
-            Time.Location = new Point(100, 600);
-            Time.Text = "Time: ";
-            Time.Size = new Size(400, 25);
-            Time.BringToFront();
-            Last[5] = Time;
+            Label FormLabel = new Label();
+            FormLabel.Location = Location;
+            FormLabel.Text = Text;
+            FormLabel.Size = new Size(400, 25);
+            FormLabel.BringToFront();
+            Last[Index] = FormLabel;
             if (Boulder.InvokeRequired)
             {
                 Boulder.BeginInvoke((MethodInvoker)delegate ()
                 {
-                    Boulder.Controls.Add(Time);
-                    Time.BringToFront();
+                    Boulder.Controls.Add(FormLabel);
                 });
             }
             else
             {
-                Boulder.Controls.Add(Time);
-                Time.BringToFront();
+                Boulder.Controls.Add(FormLabel);
             }
-            Time.BringToFront();
-
-            Label Score = new Label();
-            Score.Location = new Point(100, 500);
-            Score.Text = "Score: ";
-            Score.Size = new Size(400, 25);
-            Score.BringToFront();
-            Last[1] = Score;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Score);
-                    Score.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Score);
-                Score.BringToFront();
-            }
-            Score.BringToFront();
-
-
-            Label Lives = new Label();
-            Lives.Location = new Point(100, 525);
-            Lives.Text = "Lives: ";
-            Lives.Size = new Size(400, 25);
-            Lives.BringToFront();
-            Last[2] = Lives;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Lives);
-                    Lives.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Lives);
-                Lives.BringToFront();
-            }
-            Lives.BringToFront();
-
-            Label Deadlock = new Label();
-            Deadlock.Location = new Point(100, 550);
-            Deadlock.Text = "Deadlock: ";
-            Deadlock.Size = new Size(400, 25);
-            Deadlock.BringToFront();
-            Last[3] = Deadlock;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Deadlock);
-                    Deadlock.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Deadlock);
-                Deadlock.BringToFront();
-            }
-            Deadlock.BringToFront();
-
-            
+            FormLabel.BringToFront();
         }
 
-        public static void GameStart2(Form Boulder)
-        {
-
-            Label Radar = new Label();
-            Radar.Location = new Point(100, 575);
-            Radar.Text = "Steps to @: ";
-            Radar.Size = new Size(400, 25);
-            Radar.BringToFront();
-            Last[4] = Radar;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Radar);
-                    Radar.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Radar);
-                Radar.BringToFront();
-            }
-            Radar.BringToFront();
-
-            Label Digs = new Label();
-            Digs.Location = new Point(100, 625);
-            Digs.Text = "Digs: ";
-            Digs.Size = new Size(400, 25);
-            Digs.BringToFront();
-            Last[6] = Digs;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Digs);
-                    Digs.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Digs);
-                Digs.BringToFront();
-            }
-            Digs.BringToFront();
-
-            Label Teleportates = new Label();
-            Teleportates.Location = new Point(100, 700);
-            Teleportates.Text = "Teleportates: ";
-            Teleportates.Size = new Size(500, 100);
-            Teleportates.BringToFront();
-            Last[8] = Teleportates;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Teleportates);
-                    Teleportates.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Teleportates);
-                Teleportates.BringToFront();
-            }
-            Teleportates.BringToFront();
-
-
-
-            Label Helptip = new Label();
-            Helptip.Location = new Point(100, 500);
-            Helptip.Text = "Helptip: ";
-            Helptip.Size = new Size(500, 100);
-            Helptip.BringToFront();
-            Last[9] = Helptip;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Helptip);
-                    Helptip.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Helptip);
-                Helptip.BringToFront();
-            }
-            Helptip.BringToFront();
+        public static void GameStart(Form Boulder)
+        {    
+            ToForm(Boulder, "Score: ", new Point(100, 500), 1);
+            ToForm(Boulder, "Lives: ", new Point(100, 525), 2);
+            ToForm(Boulder, "Deadlock: ", new Point(100, 550), 3);
+            ToForm(Boulder, "Steps to @: ", new Point(100, 575), 4);
+            ToForm(Boulder, "Time: ", new Point(100, 600), 5);
+            ToForm(Boulder, "Digs: ", new Point(100, 625), 6);
+            ToForm(Boulder, "Teleportates: ", new Point(100, 650), 8);
+            ToForm(Boulder, "To finish level: ", new Point(100, 675), 9);
         }
-        /*public static void GameStart(Form Boulder)
-        {
-            Label Time = new Label();
-            Time.Location = new Point(100, 600);
-            Time.Text = "Time: ";
-            Time.Size = new Size(400, 25);
-            Time.BringToFront();
-            Last[5] = Time;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Time);
-                    Time.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Time);
-                Time.BringToFront();
-            }
-            Time.BringToFront();
-
-            Label Score = new Label();
-            Score.Location = new Point(100, 500);
-            Score.Text = "Score: ";
-            Score.Size = new Size(400, 25);
-            Score.BringToFront();
-            Last[1] = Score;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Score);
-                    Score.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Score);
-                Score.BringToFront();
-            }
-            Score.BringToFront();
-
-
-            Label Lives = new Label();
-            Lives.Location = new Point(100, 525);
-            Lives.Text = "Lives: ";
-            Lives.Size = new Size(400, 25);
-            Lives.BringToFront();
-            Last[2] = Lives;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Lives);
-                    Lives.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Lives);
-                Lives.BringToFront();
-            }
-            Lives.BringToFront();
-
-            Label Deadlock = new Label();
-            Deadlock.Location = new Point(100, 550);
-            Deadlock.Text = "Deadlock: ";
-            Deadlock.Size = new Size(400, 25);
-            Deadlock.BringToFront();
-            Last[3] = Deadlock;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Deadlock);
-                    Deadlock.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Deadlock);
-                Deadlock.BringToFront();
-            }
-            Deadlock.BringToFront();
-
-            Label Radar = new Label();
-            Radar.Location = new Point(100, 575);
-            Radar.Text = "Steps to @: ";
-            Radar.Size = new Size(400, 25);
-            Radar.BringToFront();
-            Last[4] = Radar;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Radar);
-                    Radar.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Radar);
-                Radar.BringToFront();
-            }
-            Radar.BringToFront();
-
-            Label Digs = new Label();
-            Digs.Location = new Point(100, 625);
-            Digs.Text = "Digs: ";
-            Digs.Size = new Size(400, 25);
-            Digs.BringToFront();
-            Last[6] = Digs;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Digs);
-                    Digs.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Digs);
-                Digs.BringToFront();
-            }
-            Digs.BringToFront();
-
-            Label Teleportates = new Label();
-            Teleportates.Location = new Point(100, 700);
-            Teleportates.Text = "Teleportates: ";
-            Teleportates.Size = new Size(500, 100);
-            Teleportates.BringToFront();
-            Last[8] = Teleportates;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Teleportates);
-                    Teleportates.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Teleportates);
-                Teleportates.BringToFront();
-            }
-            Teleportates.BringToFront();
-
-
-
-            Label Helptip = new Label();
-            Helptip.Location = new Point(100, 500);
-            Helptip.Text = "Helptip: ";
-            Helptip.Size = new Size(500, 100);
-            Helptip.BringToFront();
-            Last[9] = Helptip;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Helptip);
-                    Helptip.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Helptip);
-                Helptip.BringToFront();
-            }
-            Helptip.BringToFront();
-        }*/
 
         public static void GenereateInfo(Form Boulder)
         {
-            Label Steps = new Label();
-            Steps.Location = new Point(100, 650);
-            Steps.Text = "Steps: ";
-            Steps.Size = new Size(400, 25);
-            Steps.BringToFront();
-            Last[0] = Steps;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Steps);
-                    Steps.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Steps);
-                Steps.BringToFront();
-            }
-            Steps.BringToFront();
-
-           
-
-            Label Coordinates = new Label();
-            Coordinates.Location = new Point(100, 675);
-            Coordinates.Text = "Coordinates: ";
-            Coordinates.Size = new Size(500, 100);
-            Coordinates.BringToFront();
-            Last[7] = Coordinates;
-            if (Boulder.InvokeRequired)
-            {
-                Boulder.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Boulder.Controls.Add(Coordinates);
-                    Coordinates.BringToFront();
-                });
-            }
-            else
-            {
-                Boulder.Controls.Add(Coordinates);
-                Coordinates.BringToFront();
-            }
-            Coordinates.BringToFront();
-
+            ToForm(Boulder, "Steps: ", new Point(100, 650), 0);
+            ToForm(Boulder, "Coordinates: ", new Point(100, 675), 7);
         }
 
         public static void InfoSteps(Form Boulder)
@@ -709,27 +382,20 @@ namespace Boulder_Dach_GUI
             {
                 Boulder.BeginInvoke((MethodInvoker)delegate ()
                 {
-                    Boulder.Controls.Remove(Last[1]);
-                    Boulder.Controls.Remove(Last[2]);
-                    Boulder.Controls.Remove(Last[3]);
-                    Boulder.Controls.Remove(Last[4]);
-                    Boulder.Controls.Remove(Last[5]);
-                    Boulder.Controls.Remove(Last[6]);
-                    Boulder.Controls.Remove(Last[8]);
-                    Boulder.Controls.Remove(Last[9]);
+                    for (int i = 1; i <= 9; i++)
+                    {
+                        Boulder.Controls.Remove(Last[i]);
+                    }
                 });
             }
             else
             {
-                Boulder.Controls.Remove(Last[1]);
-                Boulder.Controls.Remove(Last[2]);
-                Boulder.Controls.Remove(Last[3]);
-                Boulder.Controls.Remove(Last[4]);
-                Boulder.Controls.Remove(Last[5]);
-                Boulder.Controls.Remove(Last[6]);
-                Boulder.Controls.Remove(Last[8]);
-                Boulder.Controls.Remove(Last[9]);
+                for (int i = 1; i <= 9; i++)
+                {
+                    Boulder.Controls.Remove(Last[i]);
+                }
             }
+            Field.PortalCoordinates.Clear();
         }
 
 
@@ -749,6 +415,5 @@ namespace Boulder_Dach_GUI
         {
             //Console.WriteLine(text);
         }
-
     }
 }

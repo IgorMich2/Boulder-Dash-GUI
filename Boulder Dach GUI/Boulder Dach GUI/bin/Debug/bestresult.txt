@@ -1,2 +1,3 @@
-Name: Vitalik    Result: 18700
+Name: qee    Result: 12300
 Name: Igor    Result: 3400
+Name: ewqe    Result: 3400

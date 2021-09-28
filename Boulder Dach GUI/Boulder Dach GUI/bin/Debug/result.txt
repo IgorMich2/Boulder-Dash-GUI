@@ -1,10 +1,10 @@
-Name: 
+Name: Ihor
 Score: 3500
-Steps: 142
-Digs: 1
-Lives at the end: 480
-Time: 00:00:51.3172831
-Rock down by gravity: 17
-Rock moved by hero: 3
+Steps: 18
+Digs: 0
+Lives at the end: 491
+Time: 00:00:23.8379368
+Rock down by gravity: 8
+Rock moved by hero: 0
 Result: Win
 Teleportations: 0

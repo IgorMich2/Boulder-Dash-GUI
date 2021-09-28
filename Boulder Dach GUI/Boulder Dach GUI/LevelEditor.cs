@@ -67,11 +67,6 @@ namespace Boulder_Dach_GUI
             Output.PrintCell(cursor.y, cursor.x, changed, Boulder);
         }
 
-        public static void Start()
-        {
-
-        }
-
         public static void MoveCursor(int dx, int dy)
         {
             if ((cursor.x + dx) > 0 && (cursor.y + dy) > 0 && (cursor.x + dx) < (GameField.frame.Count - 1) && (cursor.y + dy) < (GameField.frame[0].Count - 1))

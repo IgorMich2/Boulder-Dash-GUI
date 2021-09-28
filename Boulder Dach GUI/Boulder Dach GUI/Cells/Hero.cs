@@ -9,8 +9,8 @@ namespace Boulder_Dach_GUI
         public static int lives = 500;
         public static int x;
         public static int y;
-        public static int steps=0;
-        public static int digs=0;
+        public static int steps = 0;
+        public static int digs = 0;
         public static string value = "I";
         public static int RocksMoveByHero = 0;
         public static int Teleportation = 0;
@@ -44,6 +44,7 @@ namespace Boulder_Dach_GUI
 
         public static void MoveHero(string keyInfo)
         {
+
             if ("W" == keyInfo || "Up" == keyInfo)
             {
                 Hero.GoHero(Hero.y - 1, Hero.x);
@@ -104,15 +105,17 @@ namespace Boulder_Dach_GUI
             {
                 Output.switchupdate = true;
             }
+
         }
 
-    public static void GoHero(int y, int x)
+        public static void GoHero(int y, int x)
         {
             (int x, int y) prev = (Hero.x, Hero.y);
+            Cell NewCell = Field.frame[y][x];
 
             if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && (Field.frame[y][x].CanEnter() == true))
             {
-                bool isdiamond = false;
+                /*bool isdiamond = false;
                 bool israrediamond = false;
                 if (Field.frame[y][x].Value == new Diamond().Value)
                 {
@@ -121,26 +124,52 @@ namespace Boulder_Dach_GUI
                 else if (Field.frame[y][x].Value == new RareDiamond().Value)
                 {
                     israrediamond = true;
+                }*/
+
+
+                if (!(Field.frame[Hero.y][Hero.x] is Portal) && NewCell.IsDestroyable)
+                {
+                    Field.frame[Hero.y][Hero.x] = new Empty();
+                    Field.frame[y][x] = new Hero();
+                    Output.Emptycoordinates.x = Hero.x * 20;
+                    Output.Emptycoordinates.y = Hero.y * 20;
+                    Output.switcherempty = true;
+                    Output.Herocoordinates.x = x * 20;
+                    Output.Herocoordinates.y = y * 20;
+                    Output.switcherhero = true;
+                    Hero.x = x;
+                    Hero.y = y;
                 }
-                Field.frame[Hero.y][Hero.x] = new Empty();
-                Field.frame[y][x] = new Hero();
-                Output.Emptycoordinates.x = Hero.x * 20;
-                Output.Emptycoordinates.y = Hero.y * 20;
-                Output.switcherempty = true;
-                Output.Herocoordinates.x = x * 20;
-                Output.Herocoordinates.y = y * 20;
-                Output.switcherhero = true;
-                Hero.x = x;
-                Hero.y = y;
-                if (isdiamond)
+                else if (!(Field.frame[Hero.y][Hero.x] is Portal))
+                {
+                    Field.frame[Hero.y][Hero.x] = new Empty();
+                    Output.Emptycoordinates.x = Hero.x * 20;
+                    Output.Emptycoordinates.y = Hero.y * 20;
+                    Output.switcherempty = true;
+                    Hero.x = x;
+                    Hero.y = y;
+                }
+                else
+                {
+                    Field.frame[y][x] = new Hero();
+                    Output.Herocoordinates.x = x * 20;
+                    Output.Herocoordinates.y = y * 20;
+                    Output.switcherhero = true;
+                    Hero.x = x;
+                    Hero.y = y;
+                }
+                NewCell.OnEnter();
+
+                /*if (isdiamond)
                 {
                     GameField.AddScores(100);
                 }
                 else if (israrediamond)
                 {
                     GameField.AddScores(500);
-                }
-                if (2 * x - prev.x >= 0 && 2 * y - prev.y >= 0 && 2 * y - prev.y < Field.frame.Count && 2 * x - prev.x < Field.frame[0].Count && Field.frame[2 * y - prev.y][2 * x - prev.x] is Portal portal)
+                }*/
+
+                /*if (2 * x - prev.x >= 0 && 2 * y - prev.y >= 0 && 2 * y - prev.y < Field.frame.Count && 2 * x - prev.x < Field.frame[0].Count && Field.frame[2 * y - prev.y][2 * x - prev.x] is Portal portal)
                 {
                     FindHero();
                     Thread.Sleep(110);
@@ -150,11 +179,12 @@ namespace Boulder_Dach_GUI
                     Thread.Sleep(110);
                     portal.Teleportation(2 * y - prev.y, 2 * x - prev.x);
                     Teleportation++;
-                }
+                }*/
             }
             else if (x >= 0 && y >= 0 && y < Field.frame.Count && x < Field.frame[0].Count && x + (x - Hero.x) > 0 && x + (x - Hero.x) < Field.frame[0].Count && Math.Abs(x - Hero.x) == 1 && Field.frame[y][x + (x - Hero.x)].Value == new Empty().Value && Field.frame[y][x].Value == new Rock().Value)
             {
-                lock (Output.locker) {
+                lock (Output.locker)
+                {
                     Field.frame[y][Hero.x] = new Empty();
                     Field.frame[y][x] = new Hero();
                     Field.frame[y][x + (x - Hero.x)] = new Rock();
@@ -172,7 +202,7 @@ namespace Boulder_Dach_GUI
                     RocksMoveByHero++;
                 }
             }
-            steps++;   
+            steps++;
         }
         public static void GoDig(int y, int x)
         {

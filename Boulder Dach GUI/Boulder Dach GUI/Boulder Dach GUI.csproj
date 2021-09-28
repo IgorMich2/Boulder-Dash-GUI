@@ -95,23 +95,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common codebase\BorderCell.cs" />
+    <Compile Include="Cells\BorderCell.cs" />
     <Compile Include="Boulder Dach.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Boulder Dach.Designer.cs">
       <DependentUpon>Boulder Dach.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common codebase\Cell.cs" />
+    <Compile Include="Cells\Cell.cs" />
     <Compile Include="Common codebase\Database.cs" />
-    <Compile Include="Common codebase\Diamond.cs" />
-    <Compile Include="Common codebase\Empty.cs" />
-    <Compile Include="Common codebase\Enemy.cs" />
+    <Compile Include="Cells\Diamond.cs" />
+    <Compile Include="Cells\Empty.cs" />
+    <Compile Include="Cells\Enemy.cs" />
     <Compile Include="Common codebase\Field.cs" />
     <Compile Include="Common codebase\GameField.cs" />
     <Compile Include="Common codebase\GenerationLevel.cs" />
     <Compile Include="Common codebase\Gravity.cs" />
-    <Compile Include="Common codebase\Hero.cs" />
+    <Compile Include="Cells\Hero.cs" />
     <Compile Include="Common codebase\Levels.cs" />
     <Compile Include="Common codebase\Lives.cs" />
     <Compile Include="Common codebase\Help.cs" />
@@ -120,11 +120,11 @@
     <Compile Include="Common codebase\Music.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Common codebase\Rock.cs" />
-    <Compile Include="Common codebase\Sand.cs" />
-    <Compile Include="Common codebase\TextCell.cs" />
-    <Compile Include="Common codebase\RareDiamond.cs" />
-    <Compile Include="Common codebase\Portal.cs" />
+    <Compile Include="Cells\Rock.cs" />
+    <Compile Include="Cells\Sand.cs" />
+    <Compile Include="Cells\TextCell.cs" />
+    <Compile Include="Cells\RareDiamond.cs" />
+    <Compile Include="Cells\Portal.cs" />
     <EmbeddedResource Include="Boulder Dach.resx">
       <DependentUpon>Boulder Dach.cs</DependentUpon>
     </EmbeddedResource>
